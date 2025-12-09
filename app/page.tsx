@@ -229,29 +229,38 @@ function HeroSection() {
             </div>
 
             {/* キャッチコピー */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
               <span className="text-white">あなたのプロダクト、</span>
               <br />
+              <span className="text-white">まだ</span>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-warning-orange to-warning-red">
-                「善意」と「運」
+                「善意」と「偶然の無事故」
               </span>
               <span className="text-white">に</span>
               <br />
-              <span className="text-white">任せていませんか？</span>
+              <span className="text-white">依存していませんか？</span>
             </h1>
 
             {/* サブコピー */}
-            <div className="space-y-4 text-lg text-gray-300 leading-relaxed">
+            <div className="space-y-4 text-base md:text-lg text-gray-300 leading-relaxed">
               <p>
-                <span className="text-cyber-blue font-semibold">元警視庁警察官 × Web3専門家</span>が、
+                <span className="text-cyber-blue font-semibold">元警視庁警察官 × Web3セキュリティ専門家</span>が、
                 <br className="hidden sm:block" />
-                攻撃者の思考と現場感覚でシステムを点検。
+                攻撃者の視点・現場のリスク感覚・設計の盲点を総合的に監査。
               </p>
               <p>
-                見落とされがちな
-                <span className="text-warning-orange">"人・運用・設計の穴"</span>まで含めて、
+                技術の脆弱性だけでなく、
                 <br className="hidden sm:block" />
-                貴社のサービスを守るセキュリティパートナーです。
+                <span className="text-warning-orange">運用ミス・権限管理・人間依存・仕様の歪み</span>まで、
+                <br className="hidden sm:block" />
+                攻撃者に<span className="text-warning-orange">"突かれる場所"</span>を洗い出し、
+                <br className="hidden sm:block" />
+                プロダクトの安全性を底面から引き上げます。
+              </p>
+              <p>
+                <span className="text-cyber-blue font-semibold">「気づいていなかった危険」</span>を可視化し、
+                <br className="hidden sm:block" />
+                事業が落ちる穴を事前に潰すパートナーです。
               </p>
             </div>
 
