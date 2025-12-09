@@ -83,6 +83,17 @@ const UserGroupIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
   </svg>
 );
 
+const ScaleIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.5}
+      d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"
+    />
+  </svg>
+);
+
 const ChatIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path
@@ -835,6 +846,121 @@ function StorySection() {
 }
 
 // ============================================
+// 信頼の根拠セクション
+// ============================================
+
+function TrustSection() {
+  const trustPoints = [
+    {
+      icon: <ShieldCheckIcon className="w-6 h-6" />,
+      title: "守秘義務の徹底",
+      description: "警察官時代に培った機密情報の取り扱い意識を、そのまま業務に適用しています。",
+    },
+    {
+      icon: <ScaleIcon className="w-6 h-6" />,
+      title: "法令遵守の姿勢",
+      description: "グレーな手法は一切使いません。正当な方法でのみ診断・評価を行います。",
+    },
+    {
+      icon: <UserGroupIcon className="w-6 h-6" />,
+      title: "経営者目線の判断",
+      description: "技術だけでなく、事業継続・社会的信用への影響も踏まえた提案を行います。",
+    },
+  ];
+
+  return (
+    <section className="py-24 relative overflow-hidden">
+      {/* 背景装飾 */}
+      <div className="absolute inset-0 bg-gradient-to-b from-blue-900/30 via-slate-900/50 to-blue-900/30" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-3xl" />
+      
+      <div className="container-custom relative z-10">
+        {/* メインメッセージ */}
+        <div className="max-w-4xl mx-auto text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-sm font-medium mb-6">
+            <ShieldCheckIcon className="w-4 h-4" />
+            信頼の根拠
+          </div>
+          
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-8 leading-tight">
+            セキュリティを任せるには、
+            <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-emerald-400">
+              技術力だけでは足りません。
+            </span>
+          </h2>
+
+          <div className="highlight-box text-left md:text-center max-w-3xl mx-auto">
+            <p className="text-lg text-slate-200 leading-relaxed">
+              ホワイトハッカーやセキュリティ責任者には、
+              <span className="text-white font-bold">通常よりも高い倫理観と責任感</span>が求められます。
+              <br className="hidden md:block" />
+              お客様のシステムの"穴"を知る立場だからこそ、
+              <span className="text-cyan-300 font-semibold">絶対的な信頼</span>が必要です。
+            </p>
+          </div>
+        </div>
+
+        {/* 元警察官としての強み */}
+        <div className="max-w-4xl mx-auto">
+          <div className="relative p-8 md:p-12 rounded-3xl bg-gradient-to-br from-blue-900/80 to-slate-900/90 border border-blue-600/30 shadow-2xl shadow-blue-500/10">
+            {/* 装飾 */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/20 to-cyan-500/10 rounded-full blur-2xl" />
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-emerald-500/10 to-blue-500/10 rounded-full blur-2xl" />
+            
+            <div className="relative">
+              {/* ヘッダー */}
+              <div className="flex flex-col md:flex-row md:items-center gap-6 mb-10">
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/30">
+                  <ShieldCheckIcon className="w-10 h-10 text-white" />
+                </div>
+                <div>
+                  <p className="text-blue-400 text-sm font-medium mb-1">元警視庁警察官の経歴</p>
+                  <h3 className="text-2xl md:text-3xl font-bold text-white">
+                    私たちは、その高いハードルを
+                    <br className="hidden sm:block" />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">超えることができます。</span>
+                  </h3>
+                </div>
+              </div>
+
+              {/* 説明 */}
+              <p className="text-slate-300 leading-relaxed mb-10 text-lg">
+                代表の飯田は<span className="text-white font-medium">警視庁警察官として2年半勤務</span>。
+                公務員としての守秘義務・法令遵守・社会的責任を体得しています。
+                <br />
+                「悪用しようと思えばできる立場」だからこそ、
+                <span className="text-white font-medium">信頼に値する人間かどうか</span>が問われます。
+              </p>
+
+              {/* ポイント */}
+              <div className="grid md:grid-cols-3 gap-6">
+                {trustPoints.map((point, index) => (
+                  <div key={index} className="p-5 rounded-xl bg-blue-950/50 border border-blue-800/30">
+                    <div className="w-12 h-12 rounded-xl bg-blue-500/15 flex items-center justify-center text-blue-400 mb-4">
+                      {point.icon}
+                    </div>
+                    <h4 className="text-white font-semibold mb-2">{point.title}</h4>
+                    <p className="text-slate-400 text-sm leading-relaxed">{point.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 補足メッセージ */}
+        <div className="text-center mt-12">
+          <p className="text-slate-400 text-sm">
+            ※ セキュリティ診断において知り得た情報は、厳格な管理のもと取り扱います
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================
 // 強みセクション（独立）
 // ============================================
 
@@ -1356,6 +1482,7 @@ export default function Home() {
       <ServicesSection />
       <div className="section-divider" />
       <StorySection />
+      <TrustSection />
       <StrengthsSection />
       <div className="section-divider" />
       <PricingSection />
