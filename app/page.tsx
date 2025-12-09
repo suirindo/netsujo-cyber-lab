@@ -244,29 +244,29 @@ function SOCDashboard() {
       alertFlash ? "border-red-500/80 shadow-[0_0_30px_rgba(239,68,68,0.4)]" : "border-slate-700/50"
     }`}>
       {/* ヘッダー */}
-      <div className="bg-slate-900/90 border-b border-slate-700/50 px-4 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="flex gap-1.5">
-            <div className="w-3 h-3 rounded-full bg-red-500" />
-            <div className="w-3 h-3 rounded-full bg-yellow-500" />
-            <div className="w-3 h-3 rounded-full bg-green-500" />
+      <div className="bg-slate-900/90 border-b border-slate-700/50 px-5 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <div className="flex gap-2">
+            <div className="w-3.5 h-3.5 rounded-full bg-red-500" />
+            <div className="w-3.5 h-3.5 rounded-full bg-yellow-500" />
+            <div className="w-3.5 h-3.5 rounded-full bg-green-500" />
           </div>
-          <span className="text-slate-300 text-sm font-mono">Security Operations Center — Live Monitor</span>
+          <span className="text-slate-300 text-sm md:text-base font-mono font-medium">Security Operations Center — Live Monitor</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="text-emerald-400 text-xs font-mono">MONITORING</span>
+          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="text-emerald-400 text-sm font-mono font-medium">MONITORING</span>
         </div>
       </div>
 
       {/* メインコンテンツ */}
-      <div className="bg-slate-950/95 p-4">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="bg-slate-950/95 p-5 md:p-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
           
           {/* 左側：世界地図 + 攻撃元 */}
           <div className="lg:col-span-2 space-y-4">
             {/* 地図エリア */}
-            <div className="relative h-48 md:h-56 bg-slate-900/50 rounded-xl border border-slate-700/30 overflow-hidden">
+            <div className="relative h-64 md:h-80 bg-slate-900/50 rounded-xl border border-slate-700/30 overflow-hidden">
               {/* 簡易世界地図（ドット表現） */}
               <div className="absolute inset-0 opacity-30">
                 <svg viewBox="0 0 100 60" className="w-full h-full">
@@ -375,22 +375,26 @@ function SOCDashboard() {
             </div>
 
             {/* 統計パネル */}
-            <div className="grid grid-cols-4 gap-3">
-              <div className="bg-slate-900/50 rounded-lg p-3 border border-slate-700/30">
-                <div className="text-xs text-slate-500 font-mono mb-1">BLOCKED</div>
-                <div className="text-2xl font-bold text-emerald-400 font-mono">{stats.blocked}</div>
+            <div className="grid grid-cols-4 gap-4">
+              <div className="bg-slate-900/50 rounded-xl p-4 border border-slate-700/30">
+                <div className="text-xs text-slate-500 font-mono mb-2">BLOCKED</div>
+                <div className="text-3xl font-bold text-emerald-400 font-mono">{stats.blocked}</div>
+                <div className="text-xs text-emerald-500/60 mt-1">threats stopped</div>
               </div>
-              <div className="bg-slate-900/50 rounded-lg p-3 border border-slate-700/30">
-                <div className="text-xs text-slate-500 font-mono mb-1">TOTAL</div>
-                <div className="text-2xl font-bold text-slate-300 font-mono">{stats.total}</div>
+              <div className="bg-slate-900/50 rounded-xl p-4 border border-slate-700/30">
+                <div className="text-xs text-slate-500 font-mono mb-2">TOTAL</div>
+                <div className="text-3xl font-bold text-slate-300 font-mono">{stats.total}</div>
+                <div className="text-xs text-slate-500/60 mt-1">detected</div>
               </div>
-              <div className="bg-slate-900/50 rounded-lg p-3 border border-red-500/20">
-                <div className="text-xs text-slate-500 font-mono mb-1">CRITICAL</div>
-                <div className="text-2xl font-bold text-red-400 font-mono">{stats.critical}</div>
+              <div className="bg-slate-900/50 rounded-xl p-4 border border-red-500/30">
+                <div className="text-xs text-slate-500 font-mono mb-2">CRITICAL</div>
+                <div className="text-3xl font-bold text-red-400 font-mono">{stats.critical}</div>
+                <div className="text-xs text-red-500/60 mt-1">severity</div>
               </div>
-              <div className="bg-slate-900/50 rounded-lg p-3 border border-orange-500/20">
-                <div className="text-xs text-slate-500 font-mono mb-1">HIGH</div>
-                <div className="text-2xl font-bold text-orange-400 font-mono">{stats.high}</div>
+              <div className="bg-slate-900/50 rounded-xl p-4 border border-orange-500/30">
+                <div className="text-xs text-slate-500 font-mono mb-2">HIGH</div>
+                <div className="text-3xl font-bold text-orange-400 font-mono">{stats.high}</div>
+                <div className="text-xs text-orange-500/60 mt-1">severity</div>
               </div>
             </div>
           </div>
@@ -398,16 +402,16 @@ function SOCDashboard() {
           {/* 右側：リアルタイムログ */}
           <div className="space-y-4">
             <div className="bg-slate-900/50 rounded-xl border border-slate-700/30 overflow-hidden">
-              <div className="px-3 py-2 border-b border-slate-700/30 flex items-center justify-between">
-                <span className="text-xs text-slate-400 font-mono">LIVE THREAT LOG</span>
-                <span className="text-xs text-emerald-400 font-mono animate-pulse">● LIVE</span>
+              <div className="px-4 py-3 border-b border-slate-700/30 flex items-center justify-between">
+                <span className="text-sm text-slate-400 font-mono font-medium">LIVE THREAT LOG</span>
+                <span className="text-sm text-emerald-400 font-mono animate-pulse">● LIVE</span>
               </div>
-              <div className="p-2 h-64 md:h-72 overflow-hidden">
+              <div className="p-2 h-80 md:h-96 overflow-hidden">
                 <div className="space-y-1.5">
                   {logs.map((log, index) => (
                     <div
                       key={log.id}
-                      className={`text-xs font-mono p-2 rounded border transition-all duration-300 ${
+                      className={`text-sm font-mono p-3 rounded-lg border transition-all duration-300 ${
                         index === 0 ? "bg-slate-800/80" : "bg-slate-900/50"
                       } ${
                         log.type.severity === "CRITICAL"
@@ -420,10 +424,10 @@ function SOCDashboard() {
                         animation: index === 0 ? "slide-in 0.3s ease-out" : undefined,
                       }}
                     >
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-slate-500">{log.time}</span>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-slate-500 text-xs">{log.time}</span>
                         <span
-                          className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
+                          className={`px-2 py-0.5 rounded text-xs font-bold ${
                             log.type.severity === "CRITICAL"
                               ? "bg-red-500/20 text-red-400"
                               : log.type.severity === "HIGH"
@@ -436,13 +440,13 @@ function SOCDashboard() {
                           {log.type.severity}
                         </span>
                       </div>
-                      <div className="text-slate-300 truncate">{log.type.name}</div>
-                      <div className="flex items-center justify-between mt-1">
-                        <span className="text-slate-500">
+                      <div className="text-slate-200 font-medium truncate">{log.type.name}</div>
+                      <div className="flex items-center justify-between mt-2">
+                        <span className="text-slate-500 text-xs">
                           {log.source.country} • {log.source.ip}
                         </span>
                         <span
-                          className={`text-[10px] ${
+                          className={`text-xs font-semibold ${
                             log.blocked ? "text-emerald-400" : "text-red-400"
                           }`}
                         >
