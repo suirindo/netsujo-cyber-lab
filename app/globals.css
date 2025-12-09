@@ -1,52 +1,55 @@
 @import "tailwindcss";
 
 @theme {
-  /* カラーパレット - ネイビー/ダークブルー + アクセント */
-  --color-navy-950: #0a0e1a;
-  --color-navy-900: #0f172a;
-  --color-navy-800: #1e293b;
-  --color-navy-700: #334155;
-  --color-navy-600: #475569;
+  /* 落ち着いたカラーパレット */
+  --color-slate-950: #0c1222;
+  --color-slate-900: #111827;
+  --color-slate-800: #1e293b;
+  --color-slate-700: #334155;
+  --color-slate-600: #475569;
+  --color-slate-500: #64748b;
+  --color-slate-400: #94a3b8;
+  --color-slate-300: #cbd5e1;
   
-  --color-cyber-blue: #00d4ff;
-  --color-cyber-blue-dim: #0099cc;
-  --color-cyber-purple: #8b5cf6;
-  --color-cyber-green: #22c55e;
+  /* プライマリカラー - 落ち着いたブルー */
+  --color-primary-600: #2563eb;
+  --color-primary-500: #3b82f6;
+  --color-primary-400: #60a5fa;
+  --color-primary-300: #93c5fd;
   
-  --color-warning-orange: #f97316;
-  --color-warning-red: #ef4444;
-  --color-danger-glow: rgba(239, 68, 68, 0.3);
+  /* アクセントカラー - 控えめなティール */
+  --color-accent-600: #0d9488;
+  --color-accent-500: #14b8a6;
+  --color-accent-400: #2dd4bf;
   
-  /* フォント */
-  --font-heading: "Orbitron", system-ui, sans-serif;
-  --font-body: "Noto Sans JP", "Inter", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  /* 警告色 - 控えめなアンバー */
+  --color-amber-500: #f59e0b;
+  --color-amber-400: #fbbf24;
+  
+  /* 成功色 */
+  --color-emerald-500: #10b981;
+  --color-emerald-400: #34d399;
 }
 
-/* Google Fonts のインポート */
-@font-face {
-  font-family: "Orbitron";
-  src: url("https://fonts.gstatic.com/s/orbitron/v29/yMJRMIlzdpvBhQQL_Qq7dy0.woff2") format("woff2");
-  font-weight: 400 900;
-  font-display: swap;
-}
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
 /* カスタムスクロールバー */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-navy-900);
+  background: var(--color-slate-900);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-navy-600);
-  border-radius: 4px;
+  background: var(--color-slate-600);
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-cyber-blue-dim);
+  background: var(--color-slate-500);
 }
 
 /* グローバルスタイル */
@@ -55,307 +58,210 @@ html {
 }
 
 body {
-  background: linear-gradient(180deg, var(--color-navy-950) 0%, var(--color-navy-900) 100%);
-  color: #e2e8f0;
-  font-family: var(--font-body);
+  background: var(--color-slate-950);
+  color: var(--color-slate-300);
+  font-family: "Noto Sans JP", "Inter", system-ui, sans-serif;
   min-height: 100vh;
-}
-
-/* グリッドバックグラウンド */
-.grid-background {
-  background-image: 
-    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
-}
-
-/* グロー効果 */
-.glow-text {
-  text-shadow: 0 0 20px rgba(0, 212, 255, 0.5), 0 0 40px rgba(0, 212, 255, 0.3);
-}
-
-.glow-box {
-  box-shadow: 0 0 30px rgba(0, 212, 255, 0.2), inset 0 0 30px rgba(0, 212, 255, 0.05);
-}
-
-.warning-glow {
-  box-shadow: 0 0 30px rgba(249, 115, 22, 0.3), inset 0 0 20px rgba(249, 115, 22, 0.05);
-}
-
-/* アニメーション */
-@keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 40px rgba(0, 212, 255, 0.6), 0 0 60px rgba(0, 212, 255, 0.3);
-  }
-}
-
-@keyframes scan-line {
-  0% {
-    transform: translateY(-100%);
-  }
-  100% {
-    transform: translateY(100vh);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
-
-@keyframes blink {
-  0%, 50% {
-    border-color: transparent;
-  }
-  51%, 100% {
-    border-color: var(--color-cyber-blue);
-  }
-}
-
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slide-in-left {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes shield-pulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.05);
-    opacity: 0.8;
-  }
-}
-
-.animate-fade-in-up {
-  animation: fade-in-up 0.8s ease-out forwards;
-}
-
-.animate-slide-in-left {
-  animation: slide-in-left 0.6s ease-out forwards;
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-.animate-shield-pulse {
-  animation: shield-pulse 2s ease-in-out infinite;
-}
-
-/* スキャンライン効果 */
-.scan-line::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--color-cyber-blue), transparent);
-  animation: scan-line 3s linear infinite;
-  pointer-events: none;
+  line-height: 1.8;
 }
 
 /* セクションディバイダー */
 .section-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-cyber-blue-dim), transparent);
+  background: linear-gradient(90deg, transparent, var(--color-slate-700), transparent);
+  margin: 0 auto;
+  max-width: 800px;
 }
 
-/* カード系 */
-.cyber-card {
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
-  border: 1px solid rgba(0, 212, 255, 0.2);
-  border-radius: 12px;
-  backdrop-filter: blur(10px);
+/* カード */
+.card {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.6), rgba(17, 24, 39, 0.8));
+  border: 1px solid var(--color-slate-700);
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
   transition: all 0.3s ease;
 }
 
-.cyber-card:hover {
-  border-color: rgba(0, 212, 255, 0.5);
-  box-shadow: 0 0 30px rgba(0, 212, 255, 0.15);
+.card:hover {
+  border-color: var(--color-slate-600);
   transform: translateY(-2px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 /* ボタン */
 .btn-primary {
-  background: linear-gradient(135deg, var(--color-cyber-blue), var(--color-cyber-blue-dim));
-  color: var(--color-navy-950);
-  font-weight: 700;
-  padding: 16px 32px;
-  border-radius: 8px;
+  background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-500));
+  color: white;
+  font-weight: 600;
+  padding: 14px 28px;
+  border-radius: 10px;
   transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-primary::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.5s ease;
-}
-
-.btn-primary:hover::before {
-  left: 100%;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
 }
 
 .btn-secondary {
   background: transparent;
-  border: 2px solid var(--color-cyber-blue);
-  color: var(--color-cyber-blue);
-  font-weight: 600;
-  padding: 14px 28px;
-  border-radius: 8px;
+  border: 1px solid var(--color-slate-600);
+  color: var(--color-slate-300);
+  font-weight: 500;
+  padding: 12px 24px;
+  border-radius: 10px;
   transition: all 0.3s ease;
 }
 
 .btn-secondary:hover {
-  background: rgba(0, 212, 255, 0.1);
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
-}
-
-/* 警告バッジ */
-.warning-badge {
-  background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(239, 68, 68, 0.2));
-  border: 1px solid rgba(249, 115, 22, 0.5);
-  color: var(--color-warning-orange);
-  padding: 4px 12px;
-  border-radius: 4px;
-  font-size: 0.875rem;
-  font-weight: 600;
+  border-color: var(--color-primary-500);
+  color: var(--color-primary-400);
+  background: rgba(59, 130, 246, 0.1);
 }
 
 /* コンテナ */
 .container-custom {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 0 24px;
 }
 
-/* 見出し装飾 */
-.heading-cyber {
-  font-family: var(--font-heading);
-  letter-spacing: 0.05em;
-  position: relative;
-}
-
-.heading-cyber::after {
-  content: "";
-  position: absolute;
-  bottom: -8px;
-  left: 0;
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(90deg, var(--color-cyber-blue), transparent);
-}
-
-/* タイピングカーソル */
-.typing-cursor::after {
-  content: "|";
-  animation: blink 1s step-end infinite;
-  margin-left: 2px;
-  color: var(--color-cyber-blue);
-}
-
-/* HEXパターン背景 */
-.hex-pattern {
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 15V45L30 60L0 45V15L30 0Z' fill='none' stroke='%2300d4ff' stroke-opacity='0.05'/%3E%3C/svg%3E");
-}
-
 /* フォーム */
 .form-input {
-  background: rgba(15, 23, 42, 0.8);
-  border: 1px solid rgba(0, 212, 255, 0.3);
-  border-radius: 8px;
-  padding: 12px 16px;
-  color: #e2e8f0;
+  background: rgba(17, 24, 39, 0.8);
+  border: 1px solid var(--color-slate-700);
+  border-radius: 10px;
+  padding: 14px 18px;
+  color: var(--color-slate-200);
   transition: all 0.3s ease;
   width: 100%;
+  font-size: 15px;
 }
 
 .form-input:focus {
   outline: none;
-  border-color: var(--color-cyber-blue);
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 
 .form-input::placeholder {
-  color: #64748b;
+  color: var(--color-slate-500);
 }
 
 /* ステップインジケーター */
 .step-number {
-  width: 48px;
-  height: 48px;
-  background: linear-gradient(135deg, var(--color-cyber-blue), var(--color-cyber-blue-dim));
-  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-500));
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-heading);
   font-weight: 700;
-  color: var(--color-navy-950);
-  font-size: 1.25rem;
+  color: white;
+  font-size: 1.1rem;
 }
 
-/* 将来提供予定バッジ */
-.coming-soon-badge {
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(139, 92, 246, 0.1));
-  border: 1px solid rgba(139, 92, 246, 0.5);
-  color: var(--color-cyber-purple);
-  padding: 4px 12px;
-  border-radius: 4px;
+/* バッジ */
+.badge {
+  padding: 6px 14px;
+  border-radius: 6px;
   font-size: 0.75rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
 }
 
+.badge-primary {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--color-primary-400);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.badge-accent {
+  background: rgba(20, 184, 166, 0.15);
+  color: var(--color-accent-400);
+  border: 1px solid rgba(20, 184, 166, 0.3);
+}
+
+.badge-coming {
+  background: rgba(139, 92, 246, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+/* アニメーション */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out forwards;
+}
+
+/* セクション背景 */
+.section-alt {
+  background: linear-gradient(180deg, var(--color-slate-900) 0%, var(--color-slate-950) 100%);
+}
+
+/* 引用・ハイライト */
+.highlight-box {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(20, 184, 166, 0.05));
+  border-left: 3px solid var(--color-primary-500);
+  border-radius: 0 12px 12px 0;
+  padding: 20px 24px;
+}
+
+/* リストアイコン */
+.list-check {
+  list-style: none;
+  padding: 0;
+}
+
+.list-check li {
+  position: relative;
+  padding-left: 28px;
+  margin-bottom: 12px;
+}
+
+.list-check li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--color-emerald-500);
+  font-weight: 700;
+}
+
+/* グラデーションテキスト */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-primary-400), var(--color-accent-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 微細なドットパターン */
+.dot-pattern {
+  background-image: radial-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
