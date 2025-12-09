@@ -8,15 +8,22 @@
     "start": "next start",
     "lint": "next lint"
   },
-  "keywords": ["security", "web3", "penetration-testing", "cybersecurity"],
+  "keywords": [
+    "security",
+    "web3",
+    "penetration-testing",
+    "cybersecurity"
+  ],
   "author": "Netsujo",
   "license": "ISC",
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.17",
     "next": "^16.0.8",
     "react": "^19.2.1",
     "react-dom": "^19.2.1"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.3",
     "@types/node": "^24.10.2",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
