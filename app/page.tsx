@@ -508,7 +508,7 @@ function Header() {
         </a>
 
         <nav className="hidden md:flex items-center gap-8">
-          {["サービス", "料金", "ご利用の流れ", "FAQ"].map((item, i) => (
+          {["サービス", "メニュー", "ご利用の流れ", "FAQ"].map((item, i) => (
             <a
               key={i}
               href={`#${["services", "pricing", "flow", "faq"][i]}`}
@@ -534,7 +534,7 @@ function Header() {
       {mobileMenuOpen && (
         <div className="md:hidden bg-blue-900/95 backdrop-blur-md border-t border-blue-800/50 py-4">
           <div className="container-custom flex flex-col gap-4">
-            {["サービス", "料金", "ご利用の流れ", "FAQ"].map((item, i) => (
+            {["サービス", "メニュー", "ご利用の流れ", "FAQ"].map((item, i) => (
               <a
                 key={i}
                 href={`#${["services", "pricing", "flow", "faq"][i]}`}
@@ -626,14 +626,16 @@ function HeroSection() {
               サービス内容を見る
             </a>
           </div>
-          <p className="text-sm text-slate-400 mt-4">
+          <p className="text-sm text-blue-200/80 mt-4 bg-blue-900/40 px-4 py-2 rounded-lg inline-block">
             「気づいていなかった危険」を可視化し、事業が落ちる穴を事前に潰すパートナーです。
           </p>
         </div>
 
         {/* スクロールインジケーター */}
         <div className="flex justify-center mt-8">
-          <ChevronDownIcon className="w-5 h-5 text-blue-400 animate-bounce" />
+          <div className="p-2 rounded-full bg-blue-800/50 border border-blue-600/30">
+            <ChevronDownIcon className="w-5 h-5 text-blue-300 animate-bounce" />
+          </div>
         </div>
       </div>
     </section>
@@ -888,7 +890,6 @@ function PricingSection() {
   const plans = [
     {
       name: "リスクアセスメント",
-      price: "15〜25万円",
       description: "経営視点でのセキュリティ優先順位整理",
       features: [
         "2〜3時間のオンラインヒアリング",
@@ -899,7 +900,6 @@ function PricingSection() {
     },
     {
       name: "簡易脆弱性診断",
-      price: "30〜60万円",
       description: "主要な脆弱性を網羅的にチェック",
       features: [
         "ツール＋限定的な手動チェック",
@@ -911,7 +911,6 @@ function PricingSection() {
     },
     {
       name: "セキュリティ顧問",
-      price: "月10〜20万円〜",
       description: "継続的なセキュリティ相談窓口",
       features: [
         "月1回のオンラインミーティング",
@@ -927,12 +926,12 @@ function PricingSection() {
       <div className="container-custom">
         {/* 見出し */}
         <div className="text-center mb-16">
-          <p className="text-blue-400 text-sm font-medium mb-3">Pricing</p>
+          <p className="text-blue-400 text-sm font-medium mb-3">Service Menu</p>
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-            料金プラン
+            サービスメニュー
           </h2>
-          <p className="text-slate-400">
-            ※ 規模・範囲に応じて個別お見積もりいたします
+          <p className="text-slate-300">
+            ご要件をヒアリングの上、最適なプランをご提案いたします
           </p>
         </div>
 
@@ -944,20 +943,15 @@ function PricingSection() {
               className={`card p-8 relative ${plan.recommended ? "border-blue-500/50" : ""}`}
             >
               {plan.recommended && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary-500 text-white text-xs font-semibold rounded-full">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-blue-500 to-cyan-500 text-white text-xs font-semibold rounded-full shadow-lg">
                   おすすめ
                 </div>
               )}
 
               <h3 className="text-lg font-semibold text-white mb-2">{plan.name}</h3>
-              <p className="text-slate-400 text-sm mb-4">{plan.description}</p>
+              <p className="text-slate-300 text-sm mb-5">{plan.description}</p>
 
-              <div className="mb-6">
-                <span className="text-2xl font-bold text-white">{plan.price}</span>
-                <span className="text-slate-500 text-sm ml-2">（税別）</span>
-              </div>
-
-              <ul className="space-y-3">
+              <ul className="space-y-3 mb-6">
                 {plan.features.map((feature, fIndex) => (
                   <li key={fIndex} className="flex items-start gap-3 text-sm text-slate-300">
                     <CheckCircleIcon className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
@@ -965,6 +959,10 @@ function PricingSection() {
                   </li>
                 ))}
               </ul>
+
+              <div className="pt-4 border-t border-blue-800/40">
+                <span className="text-blue-300 text-sm font-medium">個別お見積り</span>
+              </div>
             </div>
           ))}
         </div>
@@ -973,11 +971,17 @@ function PricingSection() {
         <div className="card p-8 max-w-xl mx-auto text-center">
           <span className="badge badge-coming mb-4 inline-block">準備中</span>
           <h3 className="text-lg font-semibold text-white mb-3">本格ペネトレーションテスト</h3>
-          <p className="text-slate-400 text-sm mb-4">
+          <p className="text-slate-300 text-sm">
             現在、専門資格の取得と体制構築を進めています。
-            <br />
-            料金イメージ：80〜200万円〜（スコープによる）
           </p>
+        </div>
+
+        {/* お見積りCTA */}
+        <div className="text-center mt-12">
+          <a href="#contact" className="btn-primary inline-flex items-center gap-2">
+            無料でお見積り相談
+            <ArrowRightIcon className="w-4 h-4" />
+          </a>
         </div>
       </div>
     </section>
@@ -1249,7 +1253,7 @@ function ContactSection() {
               <ArrowRightIcon className="w-4 h-4" />
             </button>
 
-            <p className="text-xs text-slate-500 text-center">
+            <p className="text-xs text-slate-400 text-center bg-blue-900/30 px-4 py-2 rounded-lg">
               送信いただいた情報は、お問い合わせ対応のみに使用いたします。
             </p>
           </form>
@@ -1278,7 +1282,7 @@ function Footer() {
           </div>
 
           <nav className="flex items-center gap-6 text-sm">
-            {["サービス", "料金", "FAQ", "お問い合わせ"].map((item, i) => (
+            {["サービス", "メニュー", "FAQ", "お問い合わせ"].map((item, i) => (
               <a
                 key={i}
                 href={`#${["services", "pricing", "faq", "contact"][i]}`}
