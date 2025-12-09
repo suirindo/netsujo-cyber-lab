@@ -313,6 +313,43 @@ body {
   }
 }
 
+@keyframes dash-attack {
+  0% {
+    stroke-dashoffset: 200;
+    opacity: 1;
+  }
+  70% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes ping-slow {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
 /* セクション背景 */
 .section-alt {
   background: linear-gradient(180deg, var(--color-slate-900) 0%, var(--color-slate-950) 100%);

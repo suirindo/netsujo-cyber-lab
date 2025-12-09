@@ -146,257 +146,323 @@ const MenuIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
 );
 
 // ============================================
-// サイバーバトルアニメーション（派手版）
+// SOCダッシュボード風アニメーション
 // ============================================
 
-function CyberBattleAnimation() {
-  const [attacks, setAttacks] = useState<Array<{
-    id: number;
-    angle: number;
-    blocked: boolean;
-    type: "normal" | "heavy" | "multi";
-  }>>([]);
-  const [defenseActive, setDefenseActive] = useState(false);
-  const [blockedCount, setBlockedCount] = useState(0);
-  const [particles, setParticles] = useState<Array<{ id: number; x: number; y: number; angle: number }>>([]);
+// 攻撃タイプの定義
+const ATTACK_TYPES = [
+  { name: "SQL Injection", severity: "CRITICAL", color: "red" },
+  { name: "XSS Attack", severity: "HIGH", color: "orange" },
+  { name: "Brute Force", severity: "MEDIUM", color: "yellow" },
+  { name: "Port Scan", severity: "LOW", color: "blue" },
+  { name: "DDoS Attempt", severity: "CRITICAL", color: "red" },
+  { name: "Path Traversal", severity: "HIGH", color: "orange" },
+  { name: "CSRF Attack", severity: "MEDIUM", color: "yellow" },
+  { name: "RCE Attempt", severity: "CRITICAL", color: "red" },
+];
+
+// 国とIPの定義
+const ATTACK_SOURCES = [
+  { country: "CN", ip: "223.71.xxx.xxx", lat: 35, lng: 20 },
+  { country: "RU", ip: "185.22.xxx.xxx", lat: 25, lng: 30 },
+  { country: "US", ip: "104.18.xxx.xxx", lat: 30, lng: 75 },
+  { country: "KR", ip: "211.38.xxx.xxx", lat: 38, lng: 15 },
+  { country: "BR", ip: "189.40.xxx.xxx", lat: 55, lng: 65 },
+  { country: "DE", ip: "185.10.xxx.xxx", lat: 28, lng: 42 },
+  { country: "IN", ip: "103.21.xxx.xxx", lat: 45, lng: 25 },
+  { country: "UK", ip: "82.132.xxx.xxx", lat: 26, lng: 45 },
+];
+
+interface LogEntry {
+  id: number;
+  time: string;
+  type: typeof ATTACK_TYPES[number];
+  source: typeof ATTACK_SOURCES[number];
+  blocked: boolean;
+}
+
+interface AttackLine {
+  id: number;
+  source: typeof ATTACK_SOURCES[number];
+  blocked: boolean;
+}
+
+function SOCDashboard() {
+  const [logs, setLogs] = useState<LogEntry[]>([]);
+  const [stats, setStats] = useState({ blocked: 0, total: 0, critical: 0, high: 0 });
+  const [attackLines, setAttackLines] = useState<AttackLine[]>([]);
+  const [alertFlash, setAlertFlash] = useState(false);
 
   useEffect(() => {
-    // 攻撃を生成（より頻繁に）
-    const attackInterval = setInterval(() => {
-      const attackType = Math.random() > 0.7 ? "heavy" : Math.random() > 0.5 ? "multi" : "normal";
-      const newAttack = {
-        id: Date.now() + Math.random(),
-        angle: Math.random() * 360,
-        blocked: Math.random() > 0.15, // 85%の確率でブロック
-        type: attackType as "normal" | "heavy" | "multi",
-      };
-      setAttacks((prev) => [...prev.slice(-12), newAttack]);
-      
-      if (newAttack.blocked) {
-        setDefenseActive(true);
-        setBlockedCount((prev) => prev + 1);
-        // パーティクル生成
-        const newParticles = Array.from({ length: 8 }, (_, i) => ({
-          id: Date.now() + i,
-          x: 50 + Math.cos((newAttack.angle * Math.PI) / 180) * 15,
-          y: 50 + Math.sin((newAttack.angle * Math.PI) / 180) * 15,
-          angle: (newAttack.angle + 180 + (Math.random() - 0.5) * 60),
-        }));
-        setParticles((prev) => [...prev.slice(-20), ...newParticles]);
-        setTimeout(() => setDefenseActive(false), 200);
-      }
-    }, 800);
+    // ログを生成
+    const logInterval = setInterval(() => {
+      const attackType = ATTACK_TYPES[Math.floor(Math.random() * ATTACK_TYPES.length)];
+      const source = ATTACK_SOURCES[Math.floor(Math.random() * ATTACK_SOURCES.length)];
+      const blocked = Math.random() > 0.1; // 90%ブロック
+      const now = new Date();
+      const time = `${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}:${now.getSeconds().toString().padStart(2, "0")}`;
 
-    return () => clearInterval(attackInterval);
+      const newLog: LogEntry = {
+        id: Date.now(),
+        time,
+        type: attackType,
+        source,
+        blocked,
+      };
+
+      setLogs((prev) => [newLog, ...prev].slice(0, 8));
+      setStats((prev) => ({
+        blocked: prev.blocked + (blocked ? 1 : 0),
+        total: prev.total + 1,
+        critical: prev.critical + (attackType.severity === "CRITICAL" ? 1 : 0),
+        high: prev.high + (attackType.severity === "HIGH" ? 1 : 0),
+      }));
+
+      // 攻撃線を追加
+      setAttackLines((prev) => [...prev.slice(-5), { id: Date.now(), source, blocked }]);
+
+      // 重大な攻撃時はフラッシュ
+      if (attackType.severity === "CRITICAL") {
+        setAlertFlash(true);
+        setTimeout(() => setAlertFlash(false), 500);
+      }
+    }, 1200);
+
+    return () => clearInterval(logInterval);
   }, []);
 
-  // 古い攻撃とパーティクルを削除
+  // 攻撃線を削除
   useEffect(() => {
     const cleanup = setInterval(() => {
-      setAttacks((prev) => prev.filter((a) => Date.now() - a.id < 2000));
-      setParticles((prev) => prev.filter((p) => Date.now() - p.id < 1000));
-    }, 300);
+      setAttackLines((prev) => prev.filter((a) => Date.now() - a.id < 2500));
+    }, 500);
     return () => clearInterval(cleanup);
   }, []);
 
   return (
-    <div className="relative w-full h-[400px] md:h-[450px]">
-      {/* 背景グリッド */}
-      <div className="absolute inset-0 opacity-20">
-        <svg width="100%" height="100%">
-          <defs>
-            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(100,116,139,0.3)" strokeWidth="1"/>
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#grid)" />
-        </svg>
-      </div>
-
-      {/* 中央のシールド（大きく派手に） */}
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <div className={`relative transition-all duration-150 ${defenseActive ? "scale-110" : "scale-100"}`}>
-          {/* 外側のリング（回転） */}
-          <div 
-            className="absolute w-48 h-48 -left-24 -top-24 rounded-full border-2 border-dashed border-emerald-500/30"
-            style={{ animation: "spin 20s linear infinite" }}
-          />
-          <div 
-            className="absolute w-40 h-40 -left-20 -top-20 rounded-full border border-emerald-400/20"
-            style={{ animation: "spin 15s linear infinite reverse" }}
-          />
-          
-          {/* グロー効果（強化） */}
-          <div
-            className={`absolute w-64 h-64 -left-32 -top-32 rounded-full blur-3xl transition-all duration-150 ${
-              defenseActive ? "opacity-80 scale-125" : "opacity-30"
-            }`}
-            style={{ background: "radial-gradient(circle, rgba(34, 197, 94, 0.6) 0%, rgba(16, 185, 129, 0.3) 40%, transparent 70%)" }}
-          />
-          
-          {/* シールド本体 */}
-          <div
-            className={`w-28 h-28 rounded-2xl flex items-center justify-center transition-all duration-150 backdrop-blur-sm ${
-              defenseActive
-                ? "bg-emerald-500/40 border-emerald-400 shadow-[0_0_60px_rgba(34,197,94,0.6)]"
-                : "bg-slate-800/60 border-emerald-500/40"
-            } border-2`}
-          >
-            <svg
-              className={`w-14 h-14 transition-all duration-150 ${
-                defenseActive ? "text-emerald-300 drop-shadow-[0_0_10px_rgba(52,211,153,0.8)]" : "text-emerald-400"
-              }`}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-              />
-            </svg>
+    <div className={`relative w-full rounded-2xl overflow-hidden border transition-all duration-300 ${
+      alertFlash ? "border-red-500/80 shadow-[0_0_30px_rgba(239,68,68,0.4)]" : "border-slate-700/50"
+    }`}>
+      {/* ヘッダー */}
+      <div className="bg-slate-900/90 border-b border-slate-700/50 px-4 py-3 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="flex gap-1.5">
+            <div className="w-3 h-3 rounded-full bg-red-500" />
+            <div className="w-3 h-3 rounded-full bg-yellow-500" />
+            <div className="w-3 h-3 rounded-full bg-green-500" />
           </div>
-
-          {/* ステータス */}
-          <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 text-center">
-            <div className="text-2xl font-bold text-emerald-400 font-mono">{blockedCount}</div>
-            <div className="text-xs text-slate-500 tracking-wider">THREATS BLOCKED</div>
-          </div>
+          <span className="text-slate-300 text-sm font-mono">Security Operations Center — Live Monitor</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="text-emerald-400 text-xs font-mono">MONITORING</span>
         </div>
       </div>
 
-      {/* 攻撃者（左側 - より目立つ） */}
-      <div className="absolute left-4 md:left-12 top-1/2 -translate-y-1/2">
-        <div className="relative">
-          <div className="absolute w-24 h-24 -left-2 -top-2 rounded-full bg-red-500/10 blur-xl animate-pulse" />
-          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-red-900/60 to-red-950/80 border-2 border-red-500/50 flex items-center justify-center backdrop-blur-sm shadow-[0_0_30px_rgba(239,68,68,0.3)]">
-            <svg className="w-10 h-10 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-            </svg>
-          </div>
-          <div className="mt-3 text-sm text-red-400 font-mono text-center font-semibold">ATTACKER</div>
-          <div className="text-xs text-red-500/60 text-center">Crime Hacker</div>
-        </div>
-      </div>
-
-      {/* 防御者（右側 - より目立つ） */}
-      <div className="absolute right-4 md:right-12 top-1/2 -translate-y-1/2">
-        <div className="relative">
-          <div className="absolute w-24 h-24 -left-2 -top-2 rounded-full bg-emerald-500/10 blur-xl animate-pulse" />
-          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-900/60 to-emerald-950/80 border-2 border-emerald-500/50 flex items-center justify-center backdrop-blur-sm shadow-[0_0_30px_rgba(34,197,94,0.3)]">
-            <svg className="w-10 h-10 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
-          </div>
-          <div className="mt-3 text-sm text-emerald-400 font-mono text-center font-semibold">DEFENDER</div>
-          <div className="text-xs text-emerald-500/60 text-center">White Hacker</div>
-        </div>
-      </div>
-
-      {/* 攻撃アニメーション（SVG） */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none">
-        <defs>
-          <linearGradient id="attackGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#ef4444" stopOpacity="1" />
-            <stop offset="100%" stopColor="#ef4444" stopOpacity="0" />
-          </linearGradient>
-          <linearGradient id="heavyAttackGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#f97316" stopOpacity="1" />
-            <stop offset="100%" stopColor="#dc2626" stopOpacity="0" />
-          </linearGradient>
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-            <feMerge>
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
-        </defs>
-        
-        {attacks.map((attack) => {
-          const centerX = 50;
-          const centerY = 50;
-          const startRadius = 45;
-          const endRadius = attack.blocked ? 18 : 5;
-          const startX = centerX + Math.cos((attack.angle * Math.PI) / 180) * startRadius;
-          const startY = centerY + Math.sin((attack.angle * Math.PI) / 180) * startRadius;
-          const endX = centerX + Math.cos((attack.angle * Math.PI) / 180) * endRadius;
-          const endY = centerY + Math.sin((attack.angle * Math.PI) / 180) * endRadius;
+      {/* メインコンテンツ */}
+      <div className="bg-slate-950/95 p-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           
-          return (
-            <g key={attack.id}>
-              {/* 攻撃線 */}
-              <line
-                x1={`${startX}%`}
-                y1={`${startY}%`}
-                x2={`${endX}%`}
-                y2={`${endY}%`}
-                stroke={attack.type === "heavy" ? "url(#heavyAttackGradient)" : "url(#attackGradient)"}
-                strokeWidth={attack.type === "heavy" ? "4" : attack.type === "multi" ? "2" : "3"}
-                filter="url(#glow)"
-                style={{
-                  animation: "attack-fade 1s ease-out forwards",
-                }}
-              />
-              {/* ブロック時の衝撃波 */}
-              {attack.blocked && (
-                <circle
-                  cx={`${endX}%`}
-                  cy={`${endY}%`}
-                  r="2%"
-                  fill="none"
-                  stroke="#34d399"
-                  strokeWidth="2"
-                  style={{
-                    animation: "ripple 0.6s ease-out forwards",
-                  }}
-                />
-              )}
-            </g>
-          );
-        })}
-        
-        {/* パーティクル */}
-        {particles.map((p) => (
-          <circle
-            key={p.id}
-            cx={`${p.x}%`}
-            cy={`${p.y}%`}
-            r="3"
-            fill="#34d399"
-            style={{
-              animation: "particle-fly 0.8s ease-out forwards",
-              transformOrigin: `${p.x}% ${p.y}%`,
-              transform: `translate(${Math.cos((p.angle * Math.PI) / 180) * 50}px, ${Math.sin((p.angle * Math.PI) / 180) * 50}px)`,
-            }}
-          />
-        ))}
-      </svg>
+          {/* 左側：世界地図 + 攻撃元 */}
+          <div className="lg:col-span-2 space-y-4">
+            {/* 地図エリア */}
+            <div className="relative h-48 md:h-56 bg-slate-900/50 rounded-xl border border-slate-700/30 overflow-hidden">
+              {/* 簡易世界地図（ドット表現） */}
+              <div className="absolute inset-0 opacity-30">
+                <svg viewBox="0 0 100 60" className="w-full h-full">
+                  {/* 大陸をドットで表現 */}
+                  <g fill="rgba(100,116,139,0.5)">
+                    {/* 北米 */}
+                    <circle cx="20" cy="20" r="8" />
+                    <circle cx="25" cy="25" r="6" />
+                    {/* 南米 */}
+                    <circle cx="28" cy="42" r="5" />
+                    {/* ヨーロッパ */}
+                    <circle cx="48" cy="18" r="4" />
+                    <circle cx="52" cy="22" r="3" />
+                    {/* アフリカ */}
+                    <circle cx="50" cy="35" r="6" />
+                    {/* アジア */}
+                    <circle cx="70" cy="22" r="8" />
+                    <circle cx="78" cy="28" r="5" />
+                    {/* オーストラリア */}
+                    <circle cx="82" cy="45" r="4" />
+                  </g>
+                </svg>
+              </div>
 
-      {/* ネットワークノード */}
-      {[...Array(12)].map((_, i) => {
-        const angle = (i / 12) * 360;
-        const radius = 35 + (i % 2) * 8;
-        const x = 50 + Math.cos((angle * Math.PI) / 180) * radius;
-        const y = 50 + Math.sin((angle * Math.PI) / 180) * radius;
-        return (
-          <div
-            key={i}
-            className="absolute w-2 h-2 rounded-full bg-slate-500/40"
-            style={{
-              left: `${x}%`,
-              top: `${y}%`,
-              transform: "translate(-50%, -50%)",
-              animation: `pulse ${2 + (i % 3)}s ease-in-out infinite`,
-              animationDelay: `${i * 0.2}s`,
-            }}
-          />
-        );
-      })}
+              {/* 中央の防御ポイント（日本） */}
+              <div className="absolute right-[15%] top-[35%]">
+                <div className="relative">
+                  <div className="w-4 h-4 rounded-full bg-emerald-500 animate-ping absolute" />
+                  <div className="w-4 h-4 rounded-full bg-emerald-500 relative z-10" />
+                </div>
+              </div>
+
+              {/* 攻撃線 SVG */}
+              <svg className="absolute inset-0 w-full h-full">
+                <defs>
+                  <linearGradient id="attackLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#ef4444" />
+                    <stop offset="100%" stopColor="#ef4444" stopOpacity="0" />
+                  </linearGradient>
+                  <filter id="lineGlow">
+                    <feGaussianBlur stdDeviation="2" result="blur" />
+                    <feMerge>
+                      <feMergeNode in="blur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                </defs>
+                {attackLines.map((line) => (
+                  <g key={line.id}>
+                    <line
+                      x1={`${line.source.lng}%`}
+                      y1={`${line.source.lat}%`}
+                      x2="85%"
+                      y2="35%"
+                      stroke={line.blocked ? "#ef4444" : "#f97316"}
+                      strokeWidth="2"
+                      filter="url(#lineGlow)"
+                      strokeDasharray="200"
+                      style={{
+                        animation: "dash-attack 1.5s ease-out forwards",
+                      }}
+                    />
+                    {/* ブロック時のインパクト */}
+                    {line.blocked && (
+                      <circle
+                        cx="85%"
+                        cy="35%"
+                        r="3%"
+                        fill="none"
+                        stroke="#34d399"
+                        strokeWidth="2"
+                        style={{
+                          animation: "ripple 0.8s ease-out forwards",
+                        }}
+                      />
+                    )}
+                  </g>
+                ))}
+              </svg>
+
+              {/* 攻撃元ポイント */}
+              {ATTACK_SOURCES.map((source, i) => (
+                <div
+                  key={i}
+                  className="absolute w-2 h-2"
+                  style={{ left: `${source.lng}%`, top: `${source.lat}%` }}
+                >
+                  <div className="w-2 h-2 rounded-full bg-red-500/60" />
+                </div>
+              ))}
+
+              {/* ラベル */}
+              <div className="absolute bottom-2 left-2 text-xs text-slate-500 font-mono">
+                GLOBAL THREAT MAP
+              </div>
+              <div className="absolute bottom-2 right-2 flex items-center gap-4 text-xs font-mono">
+                <span className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-red-500" />
+                  <span className="text-slate-400">Attack</span>
+                </span>
+                <span className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                  <span className="text-slate-400">Defense</span>
+                </span>
+              </div>
+            </div>
+
+            {/* 統計パネル */}
+            <div className="grid grid-cols-4 gap-3">
+              <div className="bg-slate-900/50 rounded-lg p-3 border border-slate-700/30">
+                <div className="text-xs text-slate-500 font-mono mb-1">BLOCKED</div>
+                <div className="text-2xl font-bold text-emerald-400 font-mono">{stats.blocked}</div>
+              </div>
+              <div className="bg-slate-900/50 rounded-lg p-3 border border-slate-700/30">
+                <div className="text-xs text-slate-500 font-mono mb-1">TOTAL</div>
+                <div className="text-2xl font-bold text-slate-300 font-mono">{stats.total}</div>
+              </div>
+              <div className="bg-slate-900/50 rounded-lg p-3 border border-red-500/20">
+                <div className="text-xs text-slate-500 font-mono mb-1">CRITICAL</div>
+                <div className="text-2xl font-bold text-red-400 font-mono">{stats.critical}</div>
+              </div>
+              <div className="bg-slate-900/50 rounded-lg p-3 border border-orange-500/20">
+                <div className="text-xs text-slate-500 font-mono mb-1">HIGH</div>
+                <div className="text-2xl font-bold text-orange-400 font-mono">{stats.high}</div>
+              </div>
+            </div>
+          </div>
+
+          {/* 右側：リアルタイムログ */}
+          <div className="space-y-4">
+            <div className="bg-slate-900/50 rounded-xl border border-slate-700/30 overflow-hidden">
+              <div className="px-3 py-2 border-b border-slate-700/30 flex items-center justify-between">
+                <span className="text-xs text-slate-400 font-mono">LIVE THREAT LOG</span>
+                <span className="text-xs text-emerald-400 font-mono animate-pulse">● LIVE</span>
+              </div>
+              <div className="p-2 h-64 md:h-72 overflow-hidden">
+                <div className="space-y-1.5">
+                  {logs.map((log, index) => (
+                    <div
+                      key={log.id}
+                      className={`text-xs font-mono p-2 rounded border transition-all duration-300 ${
+                        index === 0 ? "bg-slate-800/80" : "bg-slate-900/50"
+                      } ${
+                        log.type.severity === "CRITICAL"
+                          ? "border-red-500/40"
+                          : log.type.severity === "HIGH"
+                          ? "border-orange-500/30"
+                          : "border-slate-700/30"
+                      }`}
+                      style={{
+                        animation: index === 0 ? "slide-in 0.3s ease-out" : undefined,
+                      }}
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-slate-500">{log.time}</span>
+                        <span
+                          className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
+                            log.type.severity === "CRITICAL"
+                              ? "bg-red-500/20 text-red-400"
+                              : log.type.severity === "HIGH"
+                              ? "bg-orange-500/20 text-orange-400"
+                              : log.type.severity === "MEDIUM"
+                              ? "bg-yellow-500/20 text-yellow-400"
+                              : "bg-blue-500/20 text-blue-400"
+                          }`}
+                        >
+                          {log.type.severity}
+                        </span>
+                      </div>
+                      <div className="text-slate-300 truncate">{log.type.name}</div>
+                      <div className="flex items-center justify-between mt-1">
+                        <span className="text-slate-500">
+                          {log.source.country} • {log.source.ip}
+                        </span>
+                        <span
+                          className={`text-[10px] ${
+                            log.blocked ? "text-emerald-400" : "text-red-400"
+                          }`}
+                        >
+                          {log.blocked ? "✓ BLOCKED" : "⚠ ALERT"}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
+}
+
+function CyberBattleAnimation() {
+  return <SOCDashboard />;
 }
 
 // ============================================
