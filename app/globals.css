@@ -224,6 +224,40 @@ body {
   animation: fade-in 0.6s ease-out forwards;
 }
 
+/* サイバーバトルアニメーション */
+@keyframes attack-line {
+  0% {
+    width: 0;
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes spark {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-shield {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(34, 197, 94, 0.5);
+  }
+}
+
 /* セクション背景 */
 .section-alt {
   background: linear-gradient(180deg, var(--color-slate-900) 0%, var(--color-slate-950) 100%);

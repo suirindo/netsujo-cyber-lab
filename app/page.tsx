@@ -146,6 +146,190 @@ const MenuIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
 );
 
 // ============================================
+// サイバーバトルアニメーション
+// ============================================
+
+function CyberBattleAnimation() {
+  const [attacks, setAttacks] = useState<Array<{ id: number; startX: number; startY: number; blocked: boolean }>>([]);
+  const [defenseActive, setDefenseActive] = useState(false);
+  const [blockedCount, setBlockedCount] = useState(0);
+
+  useEffect(() => {
+    // 攻撃を生成
+    const attackInterval = setInterval(() => {
+      const newAttack = {
+        id: Date.now(),
+        startX: Math.random() * 100,
+        startY: Math.random() * 60 + 20,
+        blocked: Math.random() > 0.2, // 80%の確率でブロック
+      };
+      setAttacks((prev) => [...prev.slice(-8), newAttack]);
+      
+      if (newAttack.blocked) {
+        setDefenseActive(true);
+        setBlockedCount((prev) => prev + 1);
+        setTimeout(() => setDefenseActive(false), 300);
+      }
+    }, 1500);
+
+    return () => clearInterval(attackInterval);
+  }, []);
+
+  // 攻撃を削除
+  useEffect(() => {
+    const cleanup = setInterval(() => {
+      setAttacks((prev) => prev.filter((a) => Date.now() - a.id < 3000));
+    }, 500);
+    return () => clearInterval(cleanup);
+  }, []);
+
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {/* 中央のシールド（防御システム） */}
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div
+          className={`relative transition-all duration-300 ${
+            defenseActive ? "scale-110" : "scale-100"
+          }`}
+        >
+          {/* シールドのグロー効果 */}
+          <div
+            className={`absolute inset-0 rounded-full blur-2xl transition-opacity duration-300 ${
+              defenseActive ? "opacity-60" : "opacity-20"
+            }`}
+            style={{
+              width: "200px",
+              height: "200px",
+              background: "radial-gradient(circle, rgba(34, 197, 94, 0.4) 0%, transparent 70%)",
+              transform: "translate(-50%, -50%)",
+              left: "50%",
+              top: "50%",
+            }}
+          />
+          
+          {/* シールドアイコン */}
+          <div
+            className={`w-24 h-24 rounded-2xl flex items-center justify-center transition-all duration-300 ${
+              defenseActive
+                ? "bg-emerald-500/30 border-emerald-400/60 shadow-lg shadow-emerald-500/30"
+                : "bg-slate-800/50 border-slate-600/40"
+            } border-2`}
+          >
+            <svg
+              className={`w-12 h-12 transition-colors duration-300 ${
+                defenseActive ? "text-emerald-400" : "text-slate-400"
+              }`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+              />
+            </svg>
+          </div>
+
+          {/* 防御カウンター */}
+          <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-mono">
+            <span className="text-emerald-400">{blockedCount}</span>
+            <span className="text-slate-500 ml-1">blocked</span>
+          </div>
+        </div>
+      </div>
+
+      {/* 攻撃者（左側 - クライムハッカー） */}
+      <div className="absolute left-8 lg:left-16 top-1/2 -translate-y-1/2 opacity-60">
+        <div className="relative">
+          <div className="w-16 h-16 rounded-xl bg-red-900/30 border border-red-500/30 flex items-center justify-center">
+            <svg className="w-8 h-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              />
+            </svg>
+          </div>
+          <div className="mt-2 text-xs text-red-400/70 font-mono text-center">Attacker</div>
+        </div>
+      </div>
+
+      {/* 防御者（右側 - ホワイトハッカー） */}
+      <div className="absolute right-8 lg:right-16 top-1/2 -translate-y-1/2 opacity-60">
+        <div className="relative">
+          <div className="w-16 h-16 rounded-xl bg-emerald-900/30 border border-emerald-500/30 flex items-center justify-center">
+            <svg className="w-8 h-8 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+              />
+            </svg>
+          </div>
+          <div className="mt-2 text-xs text-emerald-400/70 font-mono text-center">Defender</div>
+        </div>
+      </div>
+
+      {/* 攻撃アニメーション */}
+      {attacks.map((attack) => (
+        <div
+          key={attack.id}
+          className="absolute"
+          style={{
+            left: `${attack.startX < 50 ? 10 : 90}%`,
+            top: `${attack.startY}%`,
+          }}
+        >
+          {/* 攻撃線 */}
+          <div
+            className={`h-0.5 origin-left ${
+              attack.blocked ? "bg-gradient-to-r from-red-500 to-transparent" : "bg-gradient-to-r from-red-500 to-red-300"
+            }`}
+            style={{
+              width: attack.blocked ? "80px" : "200px",
+              animation: `attack-line 1.5s ease-out forwards`,
+              transform: attack.startX < 50 ? "rotate(0deg)" : "rotate(180deg)",
+            }}
+          />
+          
+          {/* ブロック時のスパーク */}
+          {attack.blocked && (
+            <div
+              className="absolute w-4 h-4 rounded-full bg-emerald-400"
+              style={{
+                left: attack.startX < 50 ? "80px" : "-16px",
+                top: "-8px",
+                animation: "spark 0.5s ease-out forwards",
+              }}
+            />
+          )}
+        </div>
+      ))}
+
+      {/* ネットワークノード（装飾） */}
+      <div className="absolute top-1/4 left-1/4 w-2 h-2 rounded-full bg-slate-600/50" />
+      <div className="absolute top-1/3 left-1/3 w-1.5 h-1.5 rounded-full bg-slate-600/40" />
+      <div className="absolute top-2/3 left-1/4 w-2 h-2 rounded-full bg-slate-600/50" />
+      <div className="absolute top-1/4 right-1/4 w-2 h-2 rounded-full bg-slate-600/50" />
+      <div className="absolute top-1/3 right-1/3 w-1.5 h-1.5 rounded-full bg-slate-600/40" />
+      <div className="absolute top-2/3 right-1/4 w-2 h-2 rounded-full bg-slate-600/50" />
+
+      {/* 接続線（装飾） */}
+      <svg className="absolute inset-0 w-full h-full opacity-10">
+        <line x1="25%" y1="25%" x2="50%" y2="50%" stroke="currentColor" strokeWidth="1" className="text-slate-400" />
+        <line x1="25%" y1="66%" x2="50%" y2="50%" stroke="currentColor" strokeWidth="1" className="text-slate-400" />
+        <line x1="75%" y1="25%" x2="50%" y2="50%" stroke="currentColor" strokeWidth="1" className="text-slate-400" />
+        <line x1="75%" y1="66%" x2="50%" y2="50%" stroke="currentColor" strokeWidth="1" className="text-slate-400" />
+      </svg>
+    </div>
+  );
+}
+
+// ============================================
 // ヘッダー
 // ============================================
 
@@ -240,59 +424,8 @@ function HeroSection() {
       <div className="absolute inset-0 dot-pattern opacity-50" />
       <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/95 to-slate-900" />
 
-      {/* ターミナルウィンドウ - 左側 */}
-      <div className="absolute left-4 lg:left-8 top-32 w-[340px] lg:w-[400px] opacity-[0.35] pointer-events-none select-none hidden md:block">
-        <div className="rounded-lg overflow-hidden border border-slate-700/50 shadow-2xl">
-          {/* ターミナルヘッダー */}
-          <div className="bg-slate-800/90 px-4 py-2.5 flex items-center gap-2">
-            <div className="flex gap-1.5">
-              <div className="w-3 h-3 rounded-full bg-red-500/80" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-              <div className="w-3 h-3 rounded-full bg-green-500/80" />
-            </div>
-            <span className="text-slate-400 text-xs ml-2 font-mono">security-scan — bash</span>
-          </div>
-          {/* ターミナル本体 */}
-          <div className="bg-slate-900/95 p-4 font-mono text-xs leading-relaxed">
-            <div className="text-emerald-400">$ nmap -sV --script=vuln target.com</div>
-            <div className="text-slate-400 mt-1">Starting Nmap 7.94</div>
-            <div className="text-slate-500 mt-2">PORT     STATE  SERVICE</div>
-            <div className="text-slate-400">22/tcp   open   ssh</div>
-            <div className="text-slate-400">80/tcp   open   http</div>
-            <div className="text-slate-400">443/tcp  open   https</div>
-            <div className="text-emerald-400 mt-3">$ ./audit.sh --check-auth</div>
-            <div className="text-amber-400 mt-1">[*] Checking authentication...</div>
-            <div className="text-amber-400">[*] Analyzing permissions...</div>
-            <div className="text-emerald-500">[✓] Scan complete</div>
-          </div>
-        </div>
-      </div>
-
-      {/* ターミナルウィンドウ - 右側 */}
-      <div className="absolute right-4 lg:right-8 bottom-24 w-[320px] lg:w-[380px] opacity-[0.30] pointer-events-none select-none hidden lg:block">
-        <div className="rounded-lg overflow-hidden border border-slate-700/50 shadow-2xl">
-          {/* ターミナルヘッダー */}
-          <div className="bg-slate-800/90 px-4 py-2.5 flex items-center gap-2">
-            <div className="flex gap-1.5">
-              <div className="w-3 h-3 rounded-full bg-red-500/80" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-              <div className="w-3 h-3 rounded-full bg-green-500/80" />
-            </div>
-            <span className="text-slate-400 text-xs ml-2 font-mono">vulnerability-check</span>
-          </div>
-          {/* ターミナル本体 */}
-          <div className="bg-slate-900/95 p-4 font-mono text-xs leading-relaxed">
-            <div className="text-emerald-400">$ nikto -h https://api.target.com</div>
-            <div className="text-slate-400 mt-1">- Nikto v2.5.0</div>
-            <div className="text-slate-500 mt-1">+ Target: api.target.com</div>
-            <div className="text-slate-400">+ SSL Info: TLS 1.3</div>
-            <div className="text-emerald-400 mt-3">$ sqlmap --batch -u $URL</div>
-            <div className="text-cyan-400 mt-1">[INFO] testing SQL injection</div>
-            <div className="text-cyan-400">[INFO] checking parameters...</div>
-            <div className="text-emerald-500">[✓] No vulnerabilities found</div>
-          </div>
-        </div>
-      </div>
+      {/* サイバーバトルアニメーション */}
+      <CyberBattleAnimation />
 
       <div className="container-custom relative z-10">
         <div className="max-w-3xl mx-auto text-center">
