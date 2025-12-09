@@ -1116,7 +1116,9 @@ function FAQSection() {
                   openIndex === index ? "max-h-96" : "max-h-0"
                 }`}
               >
-                <div className="px-5 pb-5 text-slate-400 text-sm leading-relaxed">{faq.a}</div>
+                <div className="mx-5 mb-5 p-4 bg-blue-900/50 rounded-lg border border-blue-700/30">
+                  <p className="text-slate-200 text-sm leading-relaxed">{faq.a}</p>
+                </div>
               </div>
             </div>
           ))}
