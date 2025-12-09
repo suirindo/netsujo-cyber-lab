@@ -187,7 +187,7 @@ function Header() {
             </a>
           ))}
           <a href="#contact" className="btn-primary text-sm py-2.5 px-5">
-            無料相談
+            無料でお問合せ
           </a>
         </nav>
 
@@ -214,7 +214,7 @@ function Header() {
               </a>
             ))}
             <a href="#contact" className="btn-primary text-center py-3">
-              無料相談
+              無料でお問合せ
             </a>
           </div>
         </div>
@@ -234,11 +234,59 @@ function HeroSection() {
     setMounted(true);
   }, []);
 
+  // ターミナル風コード（背景用）
+  const codeLines = [
+    "$ nmap -sV --script=vuln target.example.com",
+    "Starting Nmap 7.94 ( https://nmap.org )",
+    "PORT     STATE SERVICE  VERSION",
+    "22/tcp   open  ssh      OpenSSH 8.9",
+    "80/tcp   open  http     nginx 1.18.0",
+    "443/tcp  open  ssl/http nginx 1.18.0",
+    "",
+    "$ nikto -h https://target.example.com",
+    "- Nikto v2.5.0",
+    "+ Target IP: 192.168.1.100",
+    "+ Target Hostname: target.example.com",
+    "+ Target Port: 443",
+    "",
+    "$ sqlmap -u 'https://target.example.com/api'",
+    "[INFO] testing connection to the target URL",
+    "[INFO] checking if the target is protected",
+    "",
+    "$ ./security_audit.sh --full-scan",
+    "[*] Initializing security audit...",
+    "[*] Checking authentication flows...",
+    "[*] Analyzing API endpoints...",
+    "[+] Scan completed: 3 findings",
+  ];
+
   return (
-    <section className="relative min-h-screen flex items-center pt-24 pb-16">
+    <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
       {/* 微細な背景パターン */}
       <div className="absolute inset-0 dot-pattern opacity-50" />
       <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/95 to-slate-900" />
+
+      {/* ターミナル風コード背景 - 左側 */}
+      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-80 lg:w-96 opacity-[0.06] pointer-events-none select-none hidden md:block">
+        <div className="font-mono text-xs text-slate-300 leading-relaxed whitespace-pre">
+          {codeLines.map((line, i) => (
+            <div key={i} className={line.startsWith("$") ? "text-emerald-400" : line.startsWith("[") ? "text-amber-400" : ""}>
+              {line}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ターミナル風コード背景 - 右側 */}
+      <div className="absolute right-0 top-1/3 w-72 lg:w-80 opacity-[0.06] pointer-events-none select-none hidden lg:block">
+        <div className="font-mono text-xs text-slate-300 leading-relaxed whitespace-pre">
+          {codeLines.slice(8).map((line, i) => (
+            <div key={i} className={line.startsWith("$") ? "text-emerald-400" : line.startsWith("[") ? "text-amber-400" : ""}>
+              {line}
+            </div>
+          ))}
+        </div>
+      </div>
 
       <div className="container-custom relative z-10">
         <div className="max-w-3xl mx-auto text-center">
@@ -282,7 +330,7 @@ function HeroSection() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <a href="#contact" className="btn-primary inline-flex items-center justify-center gap-2">
                 <ChatIcon className="w-5 h-5" />
-                まずは30分、無料で相談する
+                無料でお問合せ
                 <ArrowRightIcon className="w-4 h-4" />
               </a>
               <a href="#services" className="btn-secondary inline-flex items-center justify-center gap-2">
@@ -291,7 +339,7 @@ function HeroSection() {
             </div>
 
             <p className="text-sm text-slate-500">
-              ※ 脆弱性診断の前に「何から手をつけるべきか」だけでも整理します
+              ※ まずはお気軽にご相談ください
             </p>
           </div>
         </div>
@@ -813,11 +861,11 @@ function ContactSection() {
         <div className="max-w-xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-primary-400 text-sm font-medium mb-3">Contact</p>
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">無料相談のお申し込み</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">お問い合わせ</h2>
             <p className="text-slate-400">
-              まずは30分のオンラインミーティングで、
+              まずはお気軽にご連絡ください。
               <br className="hidden sm:block" />
-              現状の課題を整理しましょう。
+              現状の課題を整理するところからお手伝いします。
             </p>
           </div>
 
@@ -910,7 +958,7 @@ function ContactSection() {
             </div>
 
             <button type="submit" className="btn-primary w-full flex items-center justify-center gap-2">
-              無料相談を申し込む
+              送信する
               <ArrowRightIcon className="w-4 h-4" />
             </button>
 
