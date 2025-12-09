@@ -685,10 +685,10 @@ function PainPointsSection() {
 
           {/* 結論 */}
           <div className="highlight-box">
-            <p className="text-slate-200 leading-relaxed">
+            <p className="text-slate-200 leading-relaxed text-base">
               本格的なペンテストに数十〜数百万円を投じる前に、
               <br className="hidden sm:block" />
-              <span className="text-gray-900 font-medium">
+              <span className="text-white font-semibold">
                 「まず状況を整理して、優先順位をつけてほしい」
               </span>
               <br className="hidden sm:block" />
@@ -750,7 +750,7 @@ function ServicesSection() {
       <div className="container-custom">
         {/* 見出し */}
         <div className="text-center mb-16">
-          <p className="text-primary-400 text-sm font-medium mb-3">Services</p>
+          <p className="text-blue-400 text-sm font-medium mb-3">Services</p>
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
             サービスの全体像
           </h2>
@@ -770,7 +770,7 @@ function ServicesSection() {
               </div>
 
               {/* アイコン */}
-              <div className="w-12 h-12 rounded-xl bg-primary-500/10 flex items-center justify-center text-primary-400 mb-5">
+              <div className="w-12 h-12 rounded-xl bg-blue-500/15 flex items-center justify-center text-blue-400 mb-5">
                 {service.icon}
               </div>
 
@@ -829,7 +829,7 @@ function StorySection() {
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* 左側：ストーリー */}
           <div>
-            <p className="text-primary-400 text-sm font-medium mb-3">Our Story</p>
+            <p className="text-blue-400 text-sm font-medium mb-3">Our Story</p>
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 leading-tight">
               なぜWeb3開発会社が
               <br />
@@ -863,7 +863,7 @@ function StorySection() {
             <div className="space-y-4">
               {strengths.map((item, index) => (
                 <div key={index} className="card p-5 flex gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-primary-500/10 flex items-center justify-center text-primary-400">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-blue-500/15 flex items-center justify-center text-blue-400">
                     {item.icon}
                   </div>
                   <div>
@@ -927,7 +927,7 @@ function PricingSection() {
       <div className="container-custom">
         {/* 見出し */}
         <div className="text-center mb-16">
-          <p className="text-primary-400 text-sm font-medium mb-3">Pricing</p>
+          <p className="text-blue-400 text-sm font-medium mb-3">Pricing</p>
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
             料金プラン
           </h2>
@@ -941,7 +941,7 @@ function PricingSection() {
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`card p-8 relative ${plan.recommended ? "border-primary-500/50" : ""}`}
+              className={`card p-8 relative ${plan.recommended ? "border-blue-500/50" : ""}`}
             >
               {plan.recommended && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary-500 text-white text-xs font-semibold rounded-full">
@@ -1007,9 +1007,9 @@ function ScopeSection() {
           {scopes.map((scope, index) => (
             <div
               key={index}
-              className="flex items-center gap-3 px-5 py-3 rounded-xl bg-blue-800/30/50 border border-blue-800/40"
+              className="flex items-center gap-3 px-5 py-3 rounded-xl bg-blue-900/50 border border-blue-700/40"
             >
-              <span className="text-primary-400">{scope.icon}</span>
+              <span className="text-blue-400">{scope.icon}</span>
               <span className="text-slate-300 text-sm">{scope.label}</span>
             </div>
           ))}
@@ -1037,7 +1037,7 @@ function FlowSection() {
     <section id="flow" className="py-24">
       <div className="container-custom">
         <div className="text-center mb-16">
-          <p className="text-primary-400 text-sm font-medium mb-3">Process</p>
+          <p className="text-blue-400 text-sm font-medium mb-3">Process</p>
           <h2 className="text-2xl md:text-3xl font-bold text-white">ご利用の流れ</h2>
         </div>
 
@@ -1089,7 +1089,7 @@ function FAQSection() {
     <section id="faq" className="py-24 section-alt">
       <div className="container-custom">
         <div className="text-center mb-16">
-          <p className="text-primary-400 text-sm font-medium mb-3">FAQ</p>
+          <p className="text-blue-400 text-sm font-medium mb-3">FAQ</p>
           <h2 className="text-2xl md:text-3xl font-bold text-white">よくあるご質問</h2>
         </div>
 
@@ -1147,7 +1147,7 @@ function ContactSection() {
       <div className="container-custom">
         <div className="max-w-xl mx-auto">
           <div className="text-center mb-12">
-            <p className="text-primary-400 text-sm font-medium mb-3">Contact</p>
+            <p className="text-blue-400 text-sm font-medium mb-3">Contact</p>
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">お問い合わせ</h2>
             <p className="text-slate-400">
               まずはお気軽にご連絡ください。
