@@ -460,6 +460,13 @@ function SOCDashboard() {
             </div>
           </div>
         </div>
+
+        {/* 注意書き */}
+        <div className="mt-4 text-center">
+          <p className="text-xs text-slate-500 font-mono">
+            ※ この画面はイメージです。実際のセキュリティ監視画面ではありません。
+          </p>
+        </div>
       </div>
     </div>
   );
