@@ -802,80 +802,117 @@ function ServicesSection() {
 // ============================================
 
 function StorySection() {
+  return (
+    <section className="py-24 section-alt">
+      <div className="container-custom">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="text-blue-400 text-sm font-medium mb-3">Our Story</p>
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 leading-tight">
+            なぜWeb3開発会社が
+            <br />
+            セキュリティ事業を始めるのか
+          </h2>
+
+          <div className="space-y-5 text-slate-300 leading-relaxed text-left md:text-center">
+            <p>
+              代表の飯田は、かつて<span className="text-white font-medium">警視庁警察官として2年半勤務</span>し、
+              現場で「人の善意に依存する安全」の危うさを見てきました。
+            </p>
+            <p>
+              その後、Web業界に入り、現在は<span className="text-white font-medium">京都発のWeb3専門開発パートナー</span>
+              として、ブロックチェーン・NFT・DIDを活用したシステム開発支援を行っています。
+            </p>
+            <p>
+              私たちは「元警察官の視点」×「Web3開発の実務」×「オフショア開発体制」という組み合わせで、
+              <span className="text-white font-medium">事業フェーズに合った現実的なセキュリティ戦略</span>を
+              伴走するパートナーとして、この領域に踏み込むことにしました。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================
+// 強みセクション（独立）
+// ============================================
+
+function StrengthsSection() {
   const strengths = [
     {
-      icon: <ShieldCheckIcon className="w-5 h-5" />,
+      icon: <ShieldCheckIcon className="w-8 h-8" />,
       title: "元警視庁警察官の視点",
       description: "法令・倫理・社会的信用の観点から、現実的な判断ができます。",
+      gradient: "from-blue-500 to-cyan-400",
     },
     {
-      icon: <GlobeAltIcon className="w-5 h-5" />,
+      icon: <GlobeAltIcon className="w-8 h-8" />,
       title: "Web3実務に根ざした知見",
       description: "NFT・トークン・DIDなど、オンチェーン/オフチェーンが交差する領域を理解しています。",
+      gradient: "from-cyan-500 to-emerald-400",
     },
     {
-      icon: <CodeIcon className="w-5 h-5" />,
+      icon: <CodeIcon className="w-8 h-8" />,
       title: "開発も分かるセキュリティ",
       description: "「診断して終わり」ではなく、実装しやすい改善案まで落とし込みます。",
+      gradient: "from-violet-500 to-blue-400",
     },
     {
-      icon: <ChartBarIcon className="w-5 h-5" />,
+      icon: <ChartBarIcon className="w-8 h-8" />,
       title: "フェーズに合わせた提案",
       description: "「今いくら投資すべきか」「どこまでやれば十分か」を一緒に考えます。",
+      gradient: "from-amber-500 to-orange-400",
     },
   ];
 
   return (
-    <section className="py-24 section-alt">
-      <div className="container-custom">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
-          {/* 左側：ストーリー */}
-          <div>
-            <p className="text-blue-400 text-sm font-medium mb-3">Our Story</p>
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 leading-tight">
-              なぜWeb3開発会社が
-              <br />
-              セキュリティ事業を始めるのか
-            </h2>
+    <section className="py-24 relative overflow-hidden">
+      {/* 背景装飾 */}
+      <div className="absolute inset-0 grid-pattern opacity-50" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl" />
+      
+      <div className="container-custom relative z-10">
+        {/* 見出し */}
+        <div className="text-center mb-16">
+          <p className="text-blue-400 text-sm font-medium mb-3">Our Strengths</p>
+          <h2 className="text-2xl md:text-4xl font-bold text-white mb-4">
+            私たちの強み
+          </h2>
+          <p className="text-slate-300 max-w-xl mx-auto">
+            セキュリティの専門家として、多角的な視点でお客様のビジネスを守ります
+          </p>
+        </div>
 
-            <div className="space-y-6 text-slate-400 leading-relaxed">
-              <p>
-                代表の飯田は、かつて<span className="text-white">警視庁警察官として2年半勤務</span>し、
-                現場で「人の善意に依存する安全」の危うさを見てきました。
-              </p>
-              <p>
-                その後、Web業界に入り、現在は<span className="text-white">京都発のWeb3専門開発パートナー</span>
-                として、ブロックチェーン・NFT・DIDを活用したシステム開発支援を行っています。
-              </p>
-              <p>
-                Web3の世界では、一度のミスが即資産流出・信用失墜に直結します。
-                それにもかかわらず、多くのプロジェクトがセキュリティを後回しにしています。
-              </p>
-              <p>
-                私たちは「元警察官の視点」×「Web3開発の実務」×「オフショア開発体制」という組み合わせで、
-                <span className="text-white">事業フェーズに合った現実的なセキュリティ戦略</span>を
-                伴走するパートナーとして、この領域に踏み込むことにしました。
-              </p>
-            </div>
-          </div>
+        {/* 強みカード */}
+        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          {strengths.map((item, index) => (
+            <div
+              key={index}
+              className="group relative p-8 rounded-2xl bg-gradient-to-br from-blue-900/60 to-slate-900/80 border border-blue-700/30 hover:border-blue-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1"
+            >
+              {/* グロー効果 */}
+              <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
+              
+              {/* アイコン */}
+              <div className={`relative w-16 h-16 rounded-2xl bg-gradient-to-br ${item.gradient} flex items-center justify-center text-white mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                {item.icon}
+              </div>
 
-          {/* 右側：強み */}
-          <div>
-            <h3 className="text-lg font-semibold text-white mb-6">私たちの強み</h3>
-            <div className="space-y-4">
-              {strengths.map((item, index) => (
-                <div key={index} className="card p-5 flex gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-blue-500/15 flex items-center justify-center text-blue-400">
-                    {item.icon}
-                  </div>
-                  <div>
-                    <h4 className="text-white font-medium mb-1">{item.title}</h4>
-                    <p className="text-slate-400 text-sm leading-relaxed">{item.description}</p>
-                  </div>
-                </div>
-              ))}
+              {/* テキスト */}
+              <h3 className="relative text-xl font-bold text-white mb-3">{item.title}</h3>
+              <p className="relative text-slate-300 leading-relaxed">{item.description}</p>
             </div>
-          </div>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <div className="text-center mt-12">
+          <a href="#contact" className="btn-secondary inline-flex items-center gap-2">
+            詳しく相談する
+            <ArrowRightIcon className="w-4 h-4" />
+          </a>
         </div>
       </div>
     </section>
@@ -1319,6 +1356,7 @@ export default function Home() {
       <ServicesSection />
       <div className="section-divider" />
       <StorySection />
+      <StrengthsSection />
       <div className="section-divider" />
       <PricingSection />
       <ScopeSection />
