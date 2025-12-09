@@ -234,57 +234,63 @@ function HeroSection() {
     setMounted(true);
   }, []);
 
-  // ターミナル風コード（背景用）
-  const codeLines = [
-    "$ nmap -sV --script=vuln target.example.com",
-    "Starting Nmap 7.94 ( https://nmap.org )",
-    "PORT     STATE SERVICE  VERSION",
-    "22/tcp   open  ssh      OpenSSH 8.9",
-    "80/tcp   open  http     nginx 1.18.0",
-    "443/tcp  open  ssl/http nginx 1.18.0",
-    "",
-    "$ nikto -h https://target.example.com",
-    "- Nikto v2.5.0",
-    "+ Target IP: 192.168.1.100",
-    "+ Target Hostname: target.example.com",
-    "+ Target Port: 443",
-    "",
-    "$ sqlmap -u 'https://target.example.com/api'",
-    "[INFO] testing connection to the target URL",
-    "[INFO] checking if the target is protected",
-    "",
-    "$ ./security_audit.sh --full-scan",
-    "[*] Initializing security audit...",
-    "[*] Checking authentication flows...",
-    "[*] Analyzing API endpoints...",
-    "[+] Scan completed: 3 findings",
-  ];
-
   return (
     <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
       {/* 微細な背景パターン */}
       <div className="absolute inset-0 dot-pattern opacity-50" />
       <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/95 to-slate-900" />
 
-      {/* ターミナル風コード背景 - 左側 */}
-      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-80 lg:w-96 opacity-[0.06] pointer-events-none select-none hidden md:block">
-        <div className="font-mono text-xs text-slate-300 leading-relaxed whitespace-pre">
-          {codeLines.map((line, i) => (
-            <div key={i} className={line.startsWith("$") ? "text-emerald-400" : line.startsWith("[") ? "text-amber-400" : ""}>
-              {line}
+      {/* ターミナルウィンドウ - 左側 */}
+      <div className="absolute left-4 lg:left-8 top-32 w-[340px] lg:w-[400px] opacity-[0.35] pointer-events-none select-none hidden md:block">
+        <div className="rounded-lg overflow-hidden border border-slate-700/50 shadow-2xl">
+          {/* ターミナルヘッダー */}
+          <div className="bg-slate-800/90 px-4 py-2.5 flex items-center gap-2">
+            <div className="flex gap-1.5">
+              <div className="w-3 h-3 rounded-full bg-red-500/80" />
+              <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+              <div className="w-3 h-3 rounded-full bg-green-500/80" />
             </div>
-          ))}
+            <span className="text-slate-400 text-xs ml-2 font-mono">security-scan — bash</span>
+          </div>
+          {/* ターミナル本体 */}
+          <div className="bg-slate-900/95 p-4 font-mono text-xs leading-relaxed">
+            <div className="text-emerald-400">$ nmap -sV --script=vuln target.com</div>
+            <div className="text-slate-400 mt-1">Starting Nmap 7.94</div>
+            <div className="text-slate-500 mt-2">PORT     STATE  SERVICE</div>
+            <div className="text-slate-400">22/tcp   open   ssh</div>
+            <div className="text-slate-400">80/tcp   open   http</div>
+            <div className="text-slate-400">443/tcp  open   https</div>
+            <div className="text-emerald-400 mt-3">$ ./audit.sh --check-auth</div>
+            <div className="text-amber-400 mt-1">[*] Checking authentication...</div>
+            <div className="text-amber-400">[*] Analyzing permissions...</div>
+            <div className="text-emerald-500">[✓] Scan complete</div>
+          </div>
         </div>
       </div>
 
-      {/* ターミナル風コード背景 - 右側 */}
-      <div className="absolute right-0 top-1/3 w-72 lg:w-80 opacity-[0.06] pointer-events-none select-none hidden lg:block">
-        <div className="font-mono text-xs text-slate-300 leading-relaxed whitespace-pre">
-          {codeLines.slice(8).map((line, i) => (
-            <div key={i} className={line.startsWith("$") ? "text-emerald-400" : line.startsWith("[") ? "text-amber-400" : ""}>
-              {line}
+      {/* ターミナルウィンドウ - 右側 */}
+      <div className="absolute right-4 lg:right-8 bottom-24 w-[320px] lg:w-[380px] opacity-[0.30] pointer-events-none select-none hidden lg:block">
+        <div className="rounded-lg overflow-hidden border border-slate-700/50 shadow-2xl">
+          {/* ターミナルヘッダー */}
+          <div className="bg-slate-800/90 px-4 py-2.5 flex items-center gap-2">
+            <div className="flex gap-1.5">
+              <div className="w-3 h-3 rounded-full bg-red-500/80" />
+              <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+              <div className="w-3 h-3 rounded-full bg-green-500/80" />
             </div>
-          ))}
+            <span className="text-slate-400 text-xs ml-2 font-mono">vulnerability-check</span>
+          </div>
+          {/* ターミナル本体 */}
+          <div className="bg-slate-900/95 p-4 font-mono text-xs leading-relaxed">
+            <div className="text-emerald-400">$ nikto -h https://api.target.com</div>
+            <div className="text-slate-400 mt-1">- Nikto v2.5.0</div>
+            <div className="text-slate-500 mt-1">+ Target: api.target.com</div>
+            <div className="text-slate-400">+ SSL Info: TLS 1.3</div>
+            <div className="text-emerald-400 mt-3">$ sqlmap --batch -u $URL</div>
+            <div className="text-cyan-400 mt-1">[INFO] testing SQL injection</div>
+            <div className="text-cyan-400">[INFO] checking parameters...</div>
+            <div className="text-emerald-500">[✓] No vulnerabilities found</div>
+          </div>
         </div>
       </div>
 
