@@ -890,11 +890,11 @@ function TrustSection() {
             </span>
           </h2>
 
-          <div className="highlight-box text-left md:text-center max-w-3xl mx-auto">
+          <div className="highlight-box text-left max-w-3xl mx-auto">
             <p className="text-lg text-slate-200 leading-relaxed">
               ホワイトハッカーやセキュリティ責任者には、
               <span className="text-white font-bold">通常よりも高い倫理観と責任感</span>が求められます。
-              <br className="hidden md:block" />
+              <br />
               お客様のシステムの"穴"を知る立場だからこそ、
               <span className="text-cyan-300 font-semibold">絶対的な信頼</span>が必要です。
             </p>
