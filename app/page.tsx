@@ -240,11 +240,11 @@ function SOCDashboard() {
   }, []);
 
   return (
-    <div className={`relative w-full rounded-2xl overflow-hidden border transition-all duration-300 ${
+    <div className={`relative w-full rounded-2xl overflow-hidden border transition-all duration-300 shadow-xl ${
       alertFlash ? "border-red-500/80 shadow-[0_0_30px_rgba(239,68,68,0.4)]" : "border-slate-700/50"
     }`}>
       {/* ヘッダー */}
-      <div className="bg-slate-900/90 border-b border-slate-700/50 px-5 py-4 flex items-center justify-between">
+      <div className="bg-slate-900 border-b border-slate-700/50 px-5 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <div className="flex gap-2">
             <div className="w-3.5 h-3.5 rounded-full bg-red-500" />
@@ -260,7 +260,7 @@ function SOCDashboard() {
       </div>
 
       {/* メインコンテンツ */}
-      <div className="bg-slate-950/95 p-5 md:p-6">
+      <div className="bg-slate-950 p-5 md:p-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
           
           {/* 左側：世界地図 + 攻撃元 */}
@@ -493,17 +493,17 @@ function Header() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-slate-950/95 backdrop-blur-md border-b border-slate-800" : "bg-transparent"
+        scrolled ? "bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm" : "bg-white/80 backdrop-blur-sm"
       }`}
     >
       <div className="container-custom flex items-center justify-between py-4">
         <a href="#" className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-600 to-primary-500 flex items-center justify-center">
-            <ShieldCheckIcon className="w-6 h-6 text-white" />
+            <ShieldCheckIcon className="w-6 h-6 text-gray-800" />
           </div>
           <div>
-            <span className="font-semibold text-white tracking-wide">Netsujo</span>
-            <span className="block text-xs text-slate-400">Cyber Lab</span>
+            <span className="font-semibold text-gray-800 tracking-wide">Netsujo</span>
+            <span className="block text-xs text-gray-500">Cyber Lab</span>
           </div>
         </a>
 
@@ -512,7 +512,7 @@ function Header() {
             <a
               key={i}
               href={`#${["services", "pricing", "flow", "faq"][i]}`}
-              className="text-sm text-slate-400 hover:text-white transition-colors"
+              className="text-sm text-gray-600 hover:text-primary-600 transition-colors"
             >
               {item}
             </a>
@@ -523,7 +523,7 @@ function Header() {
         </nav>
 
         <button
-          className="md:hidden p-2 text-slate-400"
+          className="md:hidden p-2 text-gray-600"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           <MenuIcon />
@@ -532,13 +532,13 @@ function Header() {
 
       {/* モバイルメニュー */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-slate-900 border-t border-slate-800 py-4">
+        <div className="md:hidden bg-white border-t border-gray-200 py-4">
           <div className="container-custom flex flex-col gap-4">
             {["サービス", "料金", "ご利用の流れ", "FAQ"].map((item, i) => (
               <a
                 key={i}
                 href={`#${["services", "pricing", "flow", "faq"][i]}`}
-                className="text-slate-300 py-2"
+                className="text-gray-700 py-2"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {item}
@@ -566,10 +566,9 @@ function HeroSection() {
   }, []);
 
   return (
-    <section className="relative pt-24 pb-8 overflow-hidden">
+    <section className="relative pt-28 pb-8 overflow-hidden bg-gradient-to-b from-gray-50 to-white">
       {/* 微細な背景パターン */}
-      <div className="absolute inset-0 dot-pattern opacity-50" />
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/95 to-slate-900" />
+      <div className="absolute inset-0 dot-pattern" />
 
       <div className="container-custom relative z-10">
         {/* テキストセクション */}
@@ -582,7 +581,7 @@ function HeroSection() {
             </div>
 
             {/* メインコピー */}
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 leading-tight">
               あなたのプロダクト、
               <br />
               まだ<span className="gradient-text">「善意」と「偶然の無事故」</span>に
@@ -591,14 +590,14 @@ function HeroSection() {
             </h1>
 
             {/* サブコピー */}
-            <div className="space-y-4 text-slate-400 leading-relaxed max-w-2xl mx-auto text-sm md:text-base">
+            <div className="space-y-4 text-gray-600 leading-relaxed max-w-2xl mx-auto text-sm md:text-base">
               <p>
-                <span className="text-white font-medium">元警視庁警察官 × Web3セキュリティ専門家</span>が、
+                <span className="text-gray-800 font-medium">元警視庁警察官 × Web3セキュリティ専門家</span>が、
                 攻撃者の視点・現場のリスク感覚・設計の盲点を総合的に監査。
               </p>
               <p>
                 技術の脆弱性だけでなく、
-                <span className="text-slate-300">運用ミス・権限管理・人間依存・仕様の歪み</span>まで、
+                <span className="text-gray-700">運用ミス・権限管理・人間依存・仕様の歪み</span>まで、
                 攻撃者に"突かれる場所"を洗い出し、安全性を底面から引き上げます。
               </p>
             </div>
@@ -622,14 +621,14 @@ function HeroSection() {
               サービス内容を見る
             </a>
           </div>
-          <p className="text-sm text-slate-500 mt-4">
+          <p className="text-sm text-gray-500 mt-4">
             「気づいていなかった危険」を可視化し、事業が落ちる穴を事前に潰すパートナーです。
           </p>
         </div>
 
         {/* スクロールインジケーター */}
         <div className="flex justify-center mt-8">
-          <ChevronDownIcon className="w-5 h-5 text-slate-500 animate-bounce" />
+          <ChevronDownIcon className="w-5 h-5 text-gray-400 animate-bounce" />
         </div>
       </div>
     </section>
@@ -655,10 +654,10 @@ function PainPointsSection() {
         <div className="max-w-3xl mx-auto">
           {/* 見出し */}
           <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
               こんなお悩みはありませんか？
             </h2>
-            <p className="text-slate-400">
+            <p className="text-gray-600">
               セキュリティは重要だと分かっていても、<br className="hidden sm:block" />
               後回しになりがちな理由があります。
             </p>
@@ -671,20 +670,20 @@ function PainPointsSection() {
                 key={index}
                 className="card p-5 flex items-start gap-4"
               >
-                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center">
-                  <ExclamationIcon className="w-4 h-4 text-amber-400" />
+                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
+                  <ExclamationIcon className="w-4 h-4 text-amber-500" />
                 </div>
-                <p className="text-slate-300 text-sm leading-relaxed">{point}</p>
+                <p className="text-gray-700 text-sm leading-relaxed">{point}</p>
               </div>
             ))}
           </div>
 
           {/* 結論 */}
           <div className="highlight-box">
-            <p className="text-slate-300 leading-relaxed">
+            <p className="text-gray-700 leading-relaxed">
               本格的なペンテストに数十〜数百万円を投じる前に、
               <br className="hidden sm:block" />
-              <span className="text-white font-medium">
+              <span className="text-gray-900 font-medium">
                 「まず状況を整理して、優先順位をつけてほしい」
               </span>
               <br className="hidden sm:block" />
@@ -747,10 +746,10 @@ function ServicesSection() {
         {/* 見出し */}
         <div className="text-center mb-16">
           <p className="text-primary-400 text-sm font-medium mb-3">Services</p>
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
             サービスの全体像
           </h2>
-          <p className="text-slate-400 max-w-xl mx-auto">
+          <p className="text-gray-500 max-w-xl mx-auto">
             フェーズや予算に応じて、最適なプランをご提案します。
           </p>
         </div>
@@ -771,13 +770,13 @@ function ServicesSection() {
               </div>
 
               {/* 内容 */}
-              <h3 className="text-lg font-semibold text-white mb-3">{service.title}</h3>
-              <p className="text-slate-400 text-sm mb-6 leading-relaxed">{service.description}</p>
+              <h3 className="text-lg font-semibold text-gray-800 mb-3">{service.title}</h3>
+              <p className="text-gray-500 text-sm mb-6 leading-relaxed">{service.description}</p>
 
               {/* 機能リスト */}
               <ul className="space-y-3">
                 {service.features.map((feature, fIndex) => (
-                  <li key={fIndex} className="flex items-start gap-3 text-sm text-slate-300">
+                  <li key={fIndex} className="flex items-start gap-3 text-sm text-gray-600">
                     <CheckCircleIcon className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
                     {feature}
                   </li>
@@ -826,19 +825,19 @@ function StorySection() {
           {/* 左側：ストーリー */}
           <div>
             <p className="text-primary-400 text-sm font-medium mb-3">Our Story</p>
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 leading-tight">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-8 leading-tight">
               なぜWeb3開発会社が
               <br />
               セキュリティ事業を始めるのか
             </h2>
 
-            <div className="space-y-6 text-slate-400 leading-relaxed">
+            <div className="space-y-6 text-gray-500 leading-relaxed">
               <p>
-                代表の飯田は、かつて<span className="text-white">警視庁警察官として2年半勤務</span>し、
+                代表の飯田は、かつて<span className="text-gray-800">警視庁警察官として2年半勤務</span>し、
                 現場で「人の善意に依存する安全」の危うさを見てきました。
               </p>
               <p>
-                その後、Web業界に入り、現在は<span className="text-white">京都発のWeb3専門開発パートナー</span>
+                その後、Web業界に入り、現在は<span className="text-gray-800">京都発のWeb3専門開発パートナー</span>
                 として、ブロックチェーン・NFT・DIDを活用したシステム開発支援を行っています。
               </p>
               <p>
@@ -847,7 +846,7 @@ function StorySection() {
               </p>
               <p>
                 私たちは「元警察官の視点」×「Web3開発の実務」×「オフショア開発体制」という組み合わせで、
-                <span className="text-white">事業フェーズに合った現実的なセキュリティ戦略</span>を
+                <span className="text-gray-800">事業フェーズに合った現実的なセキュリティ戦略</span>を
                 伴走するパートナーとして、この領域に踏み込むことにしました。
               </p>
             </div>
@@ -855,7 +854,7 @@ function StorySection() {
 
           {/* 右側：強み */}
           <div>
-            <h3 className="text-lg font-semibold text-white mb-6">私たちの強み</h3>
+            <h3 className="text-lg font-semibold text-gray-800 mb-6">私たちの強み</h3>
             <div className="space-y-4">
               {strengths.map((item, index) => (
                 <div key={index} className="card p-5 flex gap-4">
@@ -863,8 +862,8 @@ function StorySection() {
                     {item.icon}
                   </div>
                   <div>
-                    <h4 className="text-white font-medium mb-1">{item.title}</h4>
-                    <p className="text-slate-400 text-sm leading-relaxed">{item.description}</p>
+                    <h4 className="text-gray-800 font-medium mb-1">{item.title}</h4>
+                    <p className="text-gray-500 text-sm leading-relaxed">{item.description}</p>
                   </div>
                 </div>
               ))}
@@ -924,10 +923,10 @@ function PricingSection() {
         {/* 見出し */}
         <div className="text-center mb-16">
           <p className="text-primary-400 text-sm font-medium mb-3">Pricing</p>
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
             料金プラン
           </h2>
-          <p className="text-slate-400">
+          <p className="text-gray-500">
             ※ 規模・範囲に応じて個別お見積もりいたします
           </p>
         </div>
@@ -940,22 +939,22 @@ function PricingSection() {
               className={`card p-8 relative ${plan.recommended ? "border-primary-500/50" : ""}`}
             >
               {plan.recommended && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary-500 text-white text-xs font-semibold rounded-full">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary-500 text-gray-800 text-xs font-semibold rounded-full">
                   おすすめ
                 </div>
               )}
 
-              <h3 className="text-lg font-semibold text-white mb-2">{plan.name}</h3>
-              <p className="text-slate-400 text-sm mb-4">{plan.description}</p>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">{plan.name}</h3>
+              <p className="text-gray-500 text-sm mb-4">{plan.description}</p>
 
               <div className="mb-6">
-                <span className="text-2xl font-bold text-white">{plan.price}</span>
-                <span className="text-slate-500 text-sm ml-2">（税別）</span>
+                <span className="text-2xl font-bold text-gray-800">{plan.price}</span>
+                <span className="text-gray-400 text-sm ml-2">（税別）</span>
               </div>
 
               <ul className="space-y-3">
                 {plan.features.map((feature, fIndex) => (
-                  <li key={fIndex} className="flex items-start gap-3 text-sm text-slate-300">
+                  <li key={fIndex} className="flex items-start gap-3 text-sm text-gray-600">
                     <CheckCircleIcon className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
                     {feature}
                   </li>
@@ -968,8 +967,8 @@ function PricingSection() {
         {/* 将来のサービス */}
         <div className="card p-8 max-w-xl mx-auto text-center">
           <span className="badge badge-coming mb-4 inline-block">準備中</span>
-          <h3 className="text-lg font-semibold text-white mb-3">本格ペネトレーションテスト</h3>
-          <p className="text-slate-400 text-sm mb-4">
+          <h3 className="text-lg font-semibold text-gray-800 mb-3">本格ペネトレーションテスト</h3>
+          <p className="text-gray-500 text-sm mb-4">
             現在、専門資格の取得と体制構築を進めています。
             <br />
             料金イメージ：80〜200万円〜（スコープによる）
@@ -997,16 +996,16 @@ function ScopeSection() {
     <section className="py-16 section-alt">
       <div className="container-custom">
         <div className="text-center mb-10">
-          <h2 className="text-xl font-semibold text-white">対応領域</h2>
+          <h2 className="text-xl font-semibold text-gray-800">対応領域</h2>
         </div>
         <div className="flex flex-wrap justify-center gap-4">
           {scopes.map((scope, index) => (
             <div
               key={index}
-              className="flex items-center gap-3 px-5 py-3 rounded-xl bg-slate-800/50 border border-slate-700"
+              className="flex items-center gap-3 px-5 py-3 rounded-xl bg-gray-100/50 border border-gray-200"
             >
               <span className="text-primary-400">{scope.icon}</span>
-              <span className="text-slate-300 text-sm">{scope.label}</span>
+              <span className="text-gray-600 text-sm">{scope.label}</span>
             </div>
           ))}
         </div>
@@ -1034,7 +1033,7 @@ function FlowSection() {
       <div className="container-custom">
         <div className="text-center mb-16">
           <p className="text-primary-400 text-sm font-medium mb-3">Process</p>
-          <h2 className="text-2xl md:text-3xl font-bold text-white">ご利用の流れ</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800">ご利用の流れ</h2>
         </div>
 
         <div className="max-w-2xl mx-auto">
@@ -1043,8 +1042,8 @@ function FlowSection() {
               <div key={index} className="flex gap-5 items-start">
                 <div className="step-number flex-shrink-0">{index + 1}</div>
                 <div className="card p-5 flex-1">
-                  <h3 className="text-white font-medium mb-1">{step.title}</h3>
-                  <p className="text-slate-400 text-sm">{step.description}</p>
+                  <h3 className="text-gray-800 font-medium mb-1">{step.title}</h3>
+                  <p className="text-gray-500 text-sm">{step.description}</p>
                 </div>
               </div>
             ))}
@@ -1086,7 +1085,7 @@ function FAQSection() {
       <div className="container-custom">
         <div className="text-center mb-16">
           <p className="text-primary-400 text-sm font-medium mb-3">FAQ</p>
-          <h2 className="text-2xl md:text-3xl font-bold text-white">よくあるご質問</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800">よくあるご質問</h2>
         </div>
 
         <div className="max-w-2xl mx-auto space-y-3">
@@ -1096,9 +1095,9 @@ function FAQSection() {
                 className="w-full p-5 flex items-center justify-between text-left"
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
               >
-                <span className="text-white font-medium pr-4 text-sm">{faq.q}</span>
+                <span className="text-gray-800 font-medium pr-4 text-sm">{faq.q}</span>
                 <ChevronDownIcon
-                  className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${
+                  className={`w-5 h-5 text-gray-500 flex-shrink-0 transition-transform ${
                     openIndex === index ? "rotate-180" : ""
                   }`}
                 />
@@ -1108,7 +1107,7 @@ function FAQSection() {
                   openIndex === index ? "max-h-96" : "max-h-0"
                 }`}
               >
-                <div className="px-5 pb-5 text-slate-400 text-sm leading-relaxed">{faq.a}</div>
+                <div className="px-5 pb-5 text-gray-500 text-sm leading-relaxed">{faq.a}</div>
               </div>
             </div>
           ))}
@@ -1144,8 +1143,8 @@ function ContactSection() {
         <div className="max-w-xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-primary-400 text-sm font-medium mb-3">Contact</p>
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">お問い合わせ</h2>
-            <p className="text-slate-400">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">お問い合わせ</h2>
+            <p className="text-gray-500">
               まずはお気軽にご連絡ください。
               <br className="hidden sm:block" />
               現状の課題を整理するところからお手伝いします。
@@ -1155,7 +1154,7 @@ function ContactSection() {
           <form onSubmit={handleSubmit} className="card p-8 space-y-5">
             <div className="grid sm:grid-cols-2 gap-5">
               <div>
-                <label className="block text-sm text-slate-300 mb-2">
+                <label className="block text-sm text-gray-600 mb-2">
                   お名前 <span className="text-amber-400">*</span>
                 </label>
                 <input
@@ -1168,7 +1167,7 @@ function ContactSection() {
                 />
               </div>
               <div>
-                <label className="block text-sm text-slate-300 mb-2">
+                <label className="block text-sm text-gray-600 mb-2">
                   会社名 <span className="text-amber-400">*</span>
                 </label>
                 <input
@@ -1184,7 +1183,7 @@ function ContactSection() {
 
             <div className="grid sm:grid-cols-2 gap-5">
               <div>
-                <label className="block text-sm text-slate-300 mb-2">
+                <label className="block text-sm text-gray-600 mb-2">
                   メールアドレス <span className="text-amber-400">*</span>
                 </label>
                 <input
@@ -1197,7 +1196,7 @@ function ContactSection() {
                 />
               </div>
               <div>
-                <label className="block text-sm text-slate-300 mb-2">電話番号</label>
+                <label className="block text-sm text-gray-600 mb-2">電話番号</label>
                 <input
                   type="tel"
                   className="form-input"
@@ -1209,7 +1208,7 @@ function ContactSection() {
             </div>
 
             <div>
-              <label className="block text-sm text-slate-300 mb-2">
+              <label className="block text-sm text-gray-600 mb-2">
                 ご興味のあるサービス <span className="text-amber-400">*</span>
               </label>
               <select
@@ -1227,7 +1226,7 @@ function ContactSection() {
             </div>
 
             <div>
-              <label className="block text-sm text-slate-300 mb-2">
+              <label className="block text-sm text-gray-600 mb-2">
                 ご相談内容 <span className="text-amber-400">*</span>
               </label>
               <textarea
@@ -1245,7 +1244,7 @@ function ContactSection() {
               <ArrowRightIcon className="w-4 h-4" />
             </button>
 
-            <p className="text-xs text-slate-500 text-center">
+            <p className="text-xs text-gray-400 text-center">
               送信いただいた情報は、お問い合わせ対応のみに使用いたします。
             </p>
           </form>
@@ -1261,7 +1260,7 @@ function ContactSection() {
 
 function Footer() {
   return (
-    <footer className="py-12 border-t border-slate-800">
+    <footer className="py-12 border-t border-gray-200">
       <div className="container-custom">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
@@ -1269,7 +1268,7 @@ function Footer() {
               <ShieldCheckIcon className="w-5 h-5 text-white" />
             </div>
             <div>
-              <span className="font-medium text-white">Netsujo Cyber Lab</span>
+              <span className="font-medium text-gray-800">Netsujo Cyber Lab</span>
             </div>
           </div>
 
@@ -1278,14 +1277,14 @@ function Footer() {
               <a
                 key={i}
                 href={`#${["services", "pricing", "faq", "contact"][i]}`}
-                className="text-slate-400 hover:text-white transition-colors"
+                className="text-gray-500 hover:text-gray-800 transition-colors"
               >
                 {item}
               </a>
             ))}
           </nav>
 
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-gray-400">
             &copy; {new Date().getFullYear()} Netsujo Cyber Lab
           </p>
         </div>

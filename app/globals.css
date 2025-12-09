@@ -1,42 +1,48 @@
 @import "tailwindcss";
 
 @theme {
-  /* 落ち着いたカラーパレット */
-  --color-slate-950: #0c1222;
-  --color-slate-900: #111827;
+  /* ライトテーマ カラーパレット */
+  --color-white: #ffffff;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+  
+  /* プライマリカラー - クリーンなブルー */
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  
+  /* アクセントカラー */
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+  
+  --color-red-50: #fef2f2;
+  --color-red-500: #ef4444;
+  --color-red-600: #dc2626;
+  
+  --color-amber-50: #fffbeb;
+  --color-amber-500: #f59e0b;
+  
+  --color-slate-900: #0f172a;
   --color-slate-800: #1e293b;
   --color-slate-700: #334155;
-  --color-slate-600: #475569;
-  --color-slate-500: #64748b;
-  --color-slate-400: #94a3b8;
-  --color-slate-300: #cbd5e1;
-  
-  /* プライマリカラー - 落ち着いたブルー */
-  --color-primary-600: #2563eb;
-  --color-primary-500: #3b82f6;
-  --color-primary-400: #60a5fa;
-  --color-primary-300: #93c5fd;
-  
-  /* アクセントカラー - 控えめなティール */
-  --color-accent-600: #0d9488;
-  --color-accent-500: #14b8a6;
-  --color-accent-400: #2dd4bf;
-  
-  /* 警告色 - 控えめなアンバー */
-  --color-amber-500: #f59e0b;
-  --color-amber-400: #fbbf24;
-  
-  /* 成功色 */
-  --color-emerald-500: #10b981;
-  --color-emerald-400: #34d399;
 }
 
 /* Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
-/* Monospace font for code */
 .font-mono {
-  font-family: "JetBrains Mono", "Fira Code", "Monaco", "Consolas", monospace;
+  font-family: "JetBrains Mono", "Fira Code", monospace;
 }
 
 /* カスタムスクロールバー */
@@ -45,16 +51,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-slate-900);
+  background: var(--color-gray-100);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-slate-600);
+  background: var(--color-gray-300);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-slate-500);
+  background: var(--color-gray-400);
 }
 
 /* グローバルスタイル */
@@ -63,8 +69,8 @@ html {
 }
 
 body {
-  background: var(--color-slate-950);
-  color: var(--color-slate-300);
+  background: var(--color-white);
+  color: var(--color-gray-700);
   font-family: "Noto Sans JP", "Inter", system-ui, sans-serif;
   min-height: 100vh;
   line-height: 1.8;
@@ -73,24 +79,24 @@ body {
 /* セクションディバイダー */
 .section-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-slate-700), transparent);
+  background: var(--color-gray-200);
   margin: 0 auto;
-  max-width: 800px;
+  max-width: 900px;
 }
 
-/* カード */
+/* カード - ライトテーマ */
 .card {
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.6), rgba(17, 24, 39, 0.8));
-  border: 1px solid var(--color-slate-700);
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
   border-radius: 16px;
-  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
   transition: all 0.3s ease;
 }
 
 .card:hover {
-  border-color: var(--color-slate-600);
+  border-color: var(--color-gray-300);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
   transform: translateY(-2px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 /* ボタン */
@@ -101,18 +107,18 @@ body {
   padding: 14px 28px;
   border-radius: 10px;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
 }
 
 .btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
 }
 
 .btn-secondary {
-  background: transparent;
-  border: 1px solid var(--color-slate-600);
-  color: var(--color-slate-300);
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  color: var(--color-gray-700);
   font-weight: 500;
   padding: 12px 24px;
   border-radius: 10px;
@@ -121,8 +127,8 @@ body {
 
 .btn-secondary:hover {
   border-color: var(--color-primary-500);
-  color: var(--color-primary-400);
-  background: rgba(59, 130, 246, 0.1);
+  color: var(--color-primary-600);
+  background: var(--color-primary-50);
 }
 
 /* コンテナ */
@@ -132,13 +138,13 @@ body {
   padding: 0 24px;
 }
 
-/* フォーム */
+/* フォーム - ライトテーマ */
 .form-input {
-  background: rgba(17, 24, 39, 0.8);
-  border: 1px solid var(--color-slate-700);
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-300);
   border-radius: 10px;
   padding: 14px 18px;
-  color: var(--color-slate-200);
+  color: var(--color-gray-800);
   transition: all 0.3s ease;
   width: 100%;
   font-size: 15px;
@@ -147,11 +153,11 @@ body {
 .form-input:focus {
   outline: none;
   border-color: var(--color-primary-500);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .form-input::placeholder {
-  color: var(--color-slate-500);
+  color: var(--color-gray-400);
 }
 
 /* ステップインジケーター */
@@ -168,31 +174,30 @@ body {
   font-size: 1.1rem;
 }
 
-/* バッジ */
+/* バッジ - ライトテーマ */
 .badge {
   padding: 6px 14px;
-  border-radius: 6px;
-  font-size: 0.75rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
   font-weight: 600;
-  letter-spacing: 0.05em;
 }
 
 .badge-primary {
-  background: rgba(59, 130, 246, 0.15);
-  color: var(--color-primary-400);
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  background: var(--color-primary-50);
+  color: var(--color-primary-600);
+  border: 1px solid var(--color-primary-100);
 }
 
 .badge-accent {
-  background: rgba(20, 184, 166, 0.15);
-  color: var(--color-accent-400);
-  border: 1px solid rgba(20, 184, 166, 0.3);
+  background: var(--color-emerald-50);
+  color: var(--color-emerald-600);
+  border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
 .badge-coming {
-  background: rgba(139, 92, 246, 0.15);
-  color: #a78bfa;
-  border: 1px solid rgba(139, 92, 246, 0.3);
+  background: rgba(139, 92, 246, 0.1);
+  color: #7c3aed;
+  border: 1px solid rgba(139, 92, 246, 0.2);
 }
 
 /* アニメーション */
@@ -208,12 +213,8 @@ body {
 }
 
 @keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .animate-fade-in-up {
@@ -224,175 +225,61 @@ body {
   animation: fade-in 0.6s ease-out forwards;
 }
 
-/* サイバーバトルアニメーション */
-@keyframes attack-line {
-  0% {
-    width: 0;
-    opacity: 1;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes attack-fade {
-  0% {
-    opacity: 1;
-    stroke-dashoffset: 100;
-  }
-  100% {
-    opacity: 0;
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes ripple {
-  0% {
-    r: 2%;
-    opacity: 1;
-    stroke-width: 3;
-  }
-  100% {
-    r: 8%;
-    opacity: 0;
-    stroke-width: 0;
-  }
-}
-
-@keyframes particle-fly {
-  0% {
-    opacity: 1;
-    transform: scale(1) translate(0, 0);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0.5) translate(var(--tx, 50px), var(--ty, 50px));
-  }
-}
-
-@keyframes spark {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(4);
-    opacity: 0;
-  }
-}
-
-@keyframes pulse-shield {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 40px rgba(34, 197, 94, 0.5);
-  }
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 0.4;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    transform: translate(-50%, -50%) scale(1.5);
-  }
-}
-
-@keyframes dash-attack {
-  0% {
-    stroke-dashoffset: 200;
-    opacity: 1;
-  }
-  70% {
-    stroke-dashoffset: 0;
-    opacity: 1;
-  }
-  100% {
-    stroke-dashoffset: 0;
-    opacity: 0;
-  }
-}
-
-@keyframes slide-in {
-  0% {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes ping-slow {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  75%, 100% {
-    transform: scale(2);
-    opacity: 0;
-  }
-}
-
-/* セクション背景 */
+/* セクション背景 - ライトテーマ */
 .section-alt {
-  background: linear-gradient(180deg, var(--color-slate-900) 0%, var(--color-slate-950) 100%);
+  background: var(--color-gray-50);
 }
 
-/* 引用・ハイライト */
+/* ハイライトボックス */
 .highlight-box {
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(20, 184, 166, 0.05));
+  background: linear-gradient(135deg, var(--color-primary-50), rgba(236, 253, 245, 0.5));
   border-left: 3px solid var(--color-primary-500);
   border-radius: 0 12px 12px 0;
   padding: 20px 24px;
 }
 
-/* リストアイコン */
-.list-check {
-  list-style: none;
-  padding: 0;
-}
-
-.list-check li {
-  position: relative;
-  padding-left: 28px;
-  margin-bottom: 12px;
-}
-
-.list-check li::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  color: var(--color-emerald-500);
-  font-weight: 700;
-}
-
 /* グラデーションテキスト */
 .gradient-text {
-  background: linear-gradient(135deg, var(--color-primary-400), var(--color-accent-400));
+  background: linear-gradient(135deg, var(--color-primary-600), #7c3aed);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* 微細なドットパターン */
+/* SOCダッシュボード用アニメーション */
+@keyframes attack-fade {
+  0% { opacity: 1; stroke-dashoffset: 100; }
+  100% { opacity: 0; stroke-dashoffset: 0; }
+}
+
+@keyframes ripple {
+  0% { r: 2%; opacity: 1; stroke-width: 3; }
+  100% { r: 8%; opacity: 0; stroke-width: 0; }
+}
+
+@keyframes dash-attack {
+  0% { stroke-dashoffset: 200; opacity: 1; }
+  70% { stroke-dashoffset: 0; opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+@keyframes slide-in {
+  0% { opacity: 0; transform: translateX(-20px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+/* 微細なドットパターン - ライト版 */
 .dot-pattern {
-  background-image: radial-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px);
-  background-size: 24px 24px;
+  background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
 }
