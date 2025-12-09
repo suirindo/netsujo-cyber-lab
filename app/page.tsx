@@ -950,10 +950,15 @@ function TrustSection() {
         </div>
 
         {/* 補足メッセージ */}
-        <div className="text-center mt-12">
-          <p className="text-slate-400 text-sm">
-            ※ セキュリティ診断において知り得た情報は、厳格な管理のもと取り扱います
-          </p>
+        <div className="mt-12 max-w-2xl mx-auto">
+          <div className="flex items-center gap-4 p-5 rounded-xl bg-blue-950/60 border border-blue-700/40">
+            <div className="flex-shrink-0 w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center">
+              <LockClosedIcon className="w-6 h-6 text-blue-400" />
+            </div>
+            <p className="text-slate-200 text-base leading-relaxed">
+              セキュリティ診断において知り得た情報は、<span className="text-white font-medium">厳格な管理のもと取り扱います</span>
+            </p>
+          </div>
         </div>
       </div>
     </section>
