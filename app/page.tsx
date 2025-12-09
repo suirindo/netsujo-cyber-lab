@@ -146,78 +146,105 @@ const MenuIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
 );
 
 // ============================================
-// サイバーバトルアニメーション
+// サイバーバトルアニメーション（派手版）
 // ============================================
 
 function CyberBattleAnimation() {
-  const [attacks, setAttacks] = useState<Array<{ id: number; startX: number; startY: number; blocked: boolean }>>([]);
+  const [attacks, setAttacks] = useState<Array<{
+    id: number;
+    angle: number;
+    blocked: boolean;
+    type: "normal" | "heavy" | "multi";
+  }>>([]);
   const [defenseActive, setDefenseActive] = useState(false);
   const [blockedCount, setBlockedCount] = useState(0);
+  const [particles, setParticles] = useState<Array<{ id: number; x: number; y: number; angle: number }>>([]);
 
   useEffect(() => {
-    // 攻撃を生成
+    // 攻撃を生成（より頻繁に）
     const attackInterval = setInterval(() => {
+      const attackType = Math.random() > 0.7 ? "heavy" : Math.random() > 0.5 ? "multi" : "normal";
       const newAttack = {
-        id: Date.now(),
-        startX: Math.random() * 100,
-        startY: Math.random() * 60 + 20,
-        blocked: Math.random() > 0.2, // 80%の確率でブロック
+        id: Date.now() + Math.random(),
+        angle: Math.random() * 360,
+        blocked: Math.random() > 0.15, // 85%の確率でブロック
+        type: attackType as "normal" | "heavy" | "multi",
       };
-      setAttacks((prev) => [...prev.slice(-8), newAttack]);
+      setAttacks((prev) => [...prev.slice(-12), newAttack]);
       
       if (newAttack.blocked) {
         setDefenseActive(true);
         setBlockedCount((prev) => prev + 1);
-        setTimeout(() => setDefenseActive(false), 300);
+        // パーティクル生成
+        const newParticles = Array.from({ length: 8 }, (_, i) => ({
+          id: Date.now() + i,
+          x: 50 + Math.cos((newAttack.angle * Math.PI) / 180) * 15,
+          y: 50 + Math.sin((newAttack.angle * Math.PI) / 180) * 15,
+          angle: (newAttack.angle + 180 + (Math.random() - 0.5) * 60),
+        }));
+        setParticles((prev) => [...prev.slice(-20), ...newParticles]);
+        setTimeout(() => setDefenseActive(false), 200);
       }
-    }, 1500);
+    }, 800);
 
     return () => clearInterval(attackInterval);
   }, []);
 
-  // 攻撃を削除
+  // 古い攻撃とパーティクルを削除
   useEffect(() => {
     const cleanup = setInterval(() => {
-      setAttacks((prev) => prev.filter((a) => Date.now() - a.id < 3000));
-    }, 500);
+      setAttacks((prev) => prev.filter((a) => Date.now() - a.id < 2000));
+      setParticles((prev) => prev.filter((p) => Date.now() - p.id < 1000));
+    }, 300);
     return () => clearInterval(cleanup);
   }, []);
 
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      {/* 中央のシールド（防御システム） */}
+    <div className="relative w-full h-[400px] md:h-[450px]">
+      {/* 背景グリッド */}
+      <div className="absolute inset-0 opacity-20">
+        <svg width="100%" height="100%">
+          <defs>
+            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(100,116,139,0.3)" strokeWidth="1"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)" />
+        </svg>
+      </div>
+
+      {/* 中央のシールド（大きく派手に） */}
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <div
-          className={`relative transition-all duration-300 ${
-            defenseActive ? "scale-110" : "scale-100"
-          }`}
-        >
-          {/* シールドのグロー効果 */}
-          <div
-            className={`absolute inset-0 rounded-full blur-2xl transition-opacity duration-300 ${
-              defenseActive ? "opacity-60" : "opacity-20"
-            }`}
-            style={{
-              width: "200px",
-              height: "200px",
-              background: "radial-gradient(circle, rgba(34, 197, 94, 0.4) 0%, transparent 70%)",
-              transform: "translate(-50%, -50%)",
-              left: "50%",
-              top: "50%",
-            }}
+        <div className={`relative transition-all duration-150 ${defenseActive ? "scale-110" : "scale-100"}`}>
+          {/* 外側のリング（回転） */}
+          <div 
+            className="absolute w-48 h-48 -left-24 -top-24 rounded-full border-2 border-dashed border-emerald-500/30"
+            style={{ animation: "spin 20s linear infinite" }}
+          />
+          <div 
+            className="absolute w-40 h-40 -left-20 -top-20 rounded-full border border-emerald-400/20"
+            style={{ animation: "spin 15s linear infinite reverse" }}
           />
           
-          {/* シールドアイコン */}
+          {/* グロー効果（強化） */}
           <div
-            className={`w-24 h-24 rounded-2xl flex items-center justify-center transition-all duration-300 ${
+            className={`absolute w-64 h-64 -left-32 -top-32 rounded-full blur-3xl transition-all duration-150 ${
+              defenseActive ? "opacity-80 scale-125" : "opacity-30"
+            }`}
+            style={{ background: "radial-gradient(circle, rgba(34, 197, 94, 0.6) 0%, rgba(16, 185, 129, 0.3) 40%, transparent 70%)" }}
+          />
+          
+          {/* シールド本体 */}
+          <div
+            className={`w-28 h-28 rounded-2xl flex items-center justify-center transition-all duration-150 backdrop-blur-sm ${
               defenseActive
-                ? "bg-emerald-500/30 border-emerald-400/60 shadow-lg shadow-emerald-500/30"
-                : "bg-slate-800/50 border-slate-600/40"
+                ? "bg-emerald-500/40 border-emerald-400 shadow-[0_0_60px_rgba(34,197,94,0.6)]"
+                : "bg-slate-800/60 border-emerald-500/40"
             } border-2`}
           >
             <svg
-              className={`w-12 h-12 transition-colors duration-300 ${
-                defenseActive ? "text-emerald-400" : "text-slate-400"
+              className={`w-14 h-14 transition-all duration-150 ${
+                defenseActive ? "text-emerald-300 drop-shadow-[0_0_10px_rgba(52,211,153,0.8)]" : "text-emerald-400"
               }`}
               fill="none"
               viewBox="0 0 24 24"
@@ -226,105 +253,148 @@ function CyberBattleAnimation() {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={1.5}
+                strokeWidth={2}
                 d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
               />
             </svg>
           </div>
 
-          {/* 防御カウンター */}
-          <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-mono">
-            <span className="text-emerald-400">{blockedCount}</span>
-            <span className="text-slate-500 ml-1">blocked</span>
+          {/* ステータス */}
+          <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 text-center">
+            <div className="text-2xl font-bold text-emerald-400 font-mono">{blockedCount}</div>
+            <div className="text-xs text-slate-500 tracking-wider">THREATS BLOCKED</div>
           </div>
         </div>
       </div>
 
-      {/* 攻撃者（左側 - クライムハッカー） */}
-      <div className="absolute left-8 lg:left-16 top-1/2 -translate-y-1/2 opacity-60">
+      {/* 攻撃者（左側 - より目立つ） */}
+      <div className="absolute left-4 md:left-12 top-1/2 -translate-y-1/2">
         <div className="relative">
-          <div className="w-16 h-16 rounded-xl bg-red-900/30 border border-red-500/30 flex items-center justify-center">
-            <svg className="w-8 h-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-              />
+          <div className="absolute w-24 h-24 -left-2 -top-2 rounded-full bg-red-500/10 blur-xl animate-pulse" />
+          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-red-900/60 to-red-950/80 border-2 border-red-500/50 flex items-center justify-center backdrop-blur-sm shadow-[0_0_30px_rgba(239,68,68,0.3)]">
+            <svg className="w-10 h-10 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
-          <div className="mt-2 text-xs text-red-400/70 font-mono text-center">Attacker</div>
+          <div className="mt-3 text-sm text-red-400 font-mono text-center font-semibold">ATTACKER</div>
+          <div className="text-xs text-red-500/60 text-center">Crime Hacker</div>
         </div>
       </div>
 
-      {/* 防御者（右側 - ホワイトハッカー） */}
-      <div className="absolute right-8 lg:right-16 top-1/2 -translate-y-1/2 opacity-60">
+      {/* 防御者（右側 - より目立つ） */}
+      <div className="absolute right-4 md:right-12 top-1/2 -translate-y-1/2">
         <div className="relative">
-          <div className="w-16 h-16 rounded-xl bg-emerald-900/30 border border-emerald-500/30 flex items-center justify-center">
-            <svg className="w-8 h-8 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-              />
+          <div className="absolute w-24 h-24 -left-2 -top-2 rounded-full bg-emerald-500/10 blur-xl animate-pulse" />
+          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-900/60 to-emerald-950/80 border-2 border-emerald-500/50 flex items-center justify-center backdrop-blur-sm shadow-[0_0_30px_rgba(34,197,94,0.3)]">
+            <svg className="w-10 h-10 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
             </svg>
           </div>
-          <div className="mt-2 text-xs text-emerald-400/70 font-mono text-center">Defender</div>
+          <div className="mt-3 text-sm text-emerald-400 font-mono text-center font-semibold">DEFENDER</div>
+          <div className="text-xs text-emerald-500/60 text-center">White Hacker</div>
         </div>
       </div>
 
-      {/* 攻撃アニメーション */}
-      {attacks.map((attack) => (
-        <div
-          key={attack.id}
-          className="absolute"
-          style={{
-            left: `${attack.startX < 50 ? 10 : 90}%`,
-            top: `${attack.startY}%`,
-          }}
-        >
-          {/* 攻撃線 */}
-          <div
-            className={`h-0.5 origin-left ${
-              attack.blocked ? "bg-gradient-to-r from-red-500 to-transparent" : "bg-gradient-to-r from-red-500 to-red-300"
-            }`}
+      {/* 攻撃アニメーション（SVG） */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none">
+        <defs>
+          <linearGradient id="attackGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#ef4444" stopOpacity="1" />
+            <stop offset="100%" stopColor="#ef4444" stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id="heavyAttackGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#f97316" stopOpacity="1" />
+            <stop offset="100%" stopColor="#dc2626" stopOpacity="0" />
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        
+        {attacks.map((attack) => {
+          const centerX = 50;
+          const centerY = 50;
+          const startRadius = 45;
+          const endRadius = attack.blocked ? 18 : 5;
+          const startX = centerX + Math.cos((attack.angle * Math.PI) / 180) * startRadius;
+          const startY = centerY + Math.sin((attack.angle * Math.PI) / 180) * startRadius;
+          const endX = centerX + Math.cos((attack.angle * Math.PI) / 180) * endRadius;
+          const endY = centerY + Math.sin((attack.angle * Math.PI) / 180) * endRadius;
+          
+          return (
+            <g key={attack.id}>
+              {/* 攻撃線 */}
+              <line
+                x1={`${startX}%`}
+                y1={`${startY}%`}
+                x2={`${endX}%`}
+                y2={`${endY}%`}
+                stroke={attack.type === "heavy" ? "url(#heavyAttackGradient)" : "url(#attackGradient)"}
+                strokeWidth={attack.type === "heavy" ? "4" : attack.type === "multi" ? "2" : "3"}
+                filter="url(#glow)"
+                style={{
+                  animation: "attack-fade 1s ease-out forwards",
+                }}
+              />
+              {/* ブロック時の衝撃波 */}
+              {attack.blocked && (
+                <circle
+                  cx={`${endX}%`}
+                  cy={`${endY}%`}
+                  r="2%"
+                  fill="none"
+                  stroke="#34d399"
+                  strokeWidth="2"
+                  style={{
+                    animation: "ripple 0.6s ease-out forwards",
+                  }}
+                />
+              )}
+            </g>
+          );
+        })}
+        
+        {/* パーティクル */}
+        {particles.map((p) => (
+          <circle
+            key={p.id}
+            cx={`${p.x}%`}
+            cy={`${p.y}%`}
+            r="3"
+            fill="#34d399"
             style={{
-              width: attack.blocked ? "80px" : "200px",
-              animation: `attack-line 1.5s ease-out forwards`,
-              transform: attack.startX < 50 ? "rotate(0deg)" : "rotate(180deg)",
+              animation: "particle-fly 0.8s ease-out forwards",
+              transformOrigin: `${p.x}% ${p.y}%`,
+              transform: `translate(${Math.cos((p.angle * Math.PI) / 180) * 50}px, ${Math.sin((p.angle * Math.PI) / 180) * 50}px)`,
             }}
           />
-          
-          {/* ブロック時のスパーク */}
-          {attack.blocked && (
-            <div
-              className="absolute w-4 h-4 rounded-full bg-emerald-400"
-              style={{
-                left: attack.startX < 50 ? "80px" : "-16px",
-                top: "-8px",
-                animation: "spark 0.5s ease-out forwards",
-              }}
-            />
-          )}
-        </div>
-      ))}
-
-      {/* ネットワークノード（装飾） */}
-      <div className="absolute top-1/4 left-1/4 w-2 h-2 rounded-full bg-slate-600/50" />
-      <div className="absolute top-1/3 left-1/3 w-1.5 h-1.5 rounded-full bg-slate-600/40" />
-      <div className="absolute top-2/3 left-1/4 w-2 h-2 rounded-full bg-slate-600/50" />
-      <div className="absolute top-1/4 right-1/4 w-2 h-2 rounded-full bg-slate-600/50" />
-      <div className="absolute top-1/3 right-1/3 w-1.5 h-1.5 rounded-full bg-slate-600/40" />
-      <div className="absolute top-2/3 right-1/4 w-2 h-2 rounded-full bg-slate-600/50" />
-
-      {/* 接続線（装飾） */}
-      <svg className="absolute inset-0 w-full h-full opacity-10">
-        <line x1="25%" y1="25%" x2="50%" y2="50%" stroke="currentColor" strokeWidth="1" className="text-slate-400" />
-        <line x1="25%" y1="66%" x2="50%" y2="50%" stroke="currentColor" strokeWidth="1" className="text-slate-400" />
-        <line x1="75%" y1="25%" x2="50%" y2="50%" stroke="currentColor" strokeWidth="1" className="text-slate-400" />
-        <line x1="75%" y1="66%" x2="50%" y2="50%" stroke="currentColor" strokeWidth="1" className="text-slate-400" />
+        ))}
       </svg>
+
+      {/* ネットワークノード */}
+      {[...Array(12)].map((_, i) => {
+        const angle = (i / 12) * 360;
+        const radius = 35 + (i % 2) * 8;
+        const x = 50 + Math.cos((angle * Math.PI) / 180) * radius;
+        const y = 50 + Math.sin((angle * Math.PI) / 180) * radius;
+        return (
+          <div
+            key={i}
+            className="absolute w-2 h-2 rounded-full bg-slate-500/40"
+            style={{
+              left: `${x}%`,
+              top: `${y}%`,
+              transform: "translate(-50%, -50%)",
+              animation: `pulse ${2 + (i % 3)}s ease-in-out infinite`,
+              animationDelay: `${i * 0.2}s`,
+            }}
+          />
+        );
+      })}
     </div>
   );
 }
@@ -419,17 +489,15 @@ function HeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
+    <section className="relative pt-24 pb-8 overflow-hidden">
       {/* 微細な背景パターン */}
       <div className="absolute inset-0 dot-pattern opacity-50" />
       <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/95 to-slate-900" />
 
-      {/* サイバーバトルアニメーション */}
-      <CyberBattleAnimation />
-
       <div className="container-custom relative z-10">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className={`space-y-8 ${mounted ? "animate-fade-in-up" : "opacity-0"}`}>
+        {/* テキストセクション */}
+        <div className="max-w-3xl mx-auto text-center mb-8">
+          <div className={`space-y-6 ${mounted ? "animate-fade-in-up" : "opacity-0"}`}>
             {/* バッジ */}
             <div className="inline-flex items-center gap-2 badge badge-primary">
               <ShieldCheckIcon className="w-4 h-4" />
@@ -446,45 +514,44 @@ function HeroSection() {
             </h1>
 
             {/* サブコピー */}
-            <div className="space-y-6 text-slate-400 leading-relaxed max-w-2xl mx-auto">
+            <div className="space-y-4 text-slate-400 leading-relaxed max-w-2xl mx-auto text-sm md:text-base">
               <p>
                 <span className="text-white font-medium">元警視庁警察官 × Web3セキュリティ専門家</span>が、
-                <br className="hidden sm:block" />
                 攻撃者の視点・現場のリスク感覚・設計の盲点を総合的に監査。
               </p>
               <p>
                 技術の脆弱性だけでなく、
                 <span className="text-slate-300">運用ミス・権限管理・人間依存・仕様の歪み</span>まで、
-                <br className="hidden sm:block" />
                 攻撃者に"突かれる場所"を洗い出し、安全性を底面から引き上げます。
               </p>
-              <p className="text-slate-300">
-                「気づいていなかった危険」を可視化し、
-                <br className="hidden sm:block" />
-                事業が落ちる穴を事前に潰すパートナーです。
-              </p>
             </div>
-
-            {/* CTA */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <a href="#contact" className="btn-primary inline-flex items-center justify-center gap-2">
-                <ChatIcon className="w-5 h-5" />
-                無料でお問合せ
-                <ArrowRightIcon className="w-4 h-4" />
-              </a>
-              <a href="#services" className="btn-secondary inline-flex items-center justify-center gap-2">
-                サービス内容を見る
-              </a>
-            </div>
-
-            <p className="text-sm text-slate-500">
-              ※ まずはお気軽にご相談ください
-            </p>
           </div>
         </div>
 
+        {/* アニメーションセクション */}
+        <div className={`${mounted ? "animate-fade-in" : "opacity-0"}`} style={{ animationDelay: "0.3s" }}>
+          <CyberBattleAnimation />
+        </div>
+
+        {/* CTA */}
+        <div className={`max-w-3xl mx-auto text-center mt-6 ${mounted ? "animate-fade-in-up" : "opacity-0"}`} style={{ animationDelay: "0.5s" }}>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="#contact" className="btn-primary inline-flex items-center justify-center gap-2">
+              <ChatIcon className="w-5 h-5" />
+              無料でお問合せ
+              <ArrowRightIcon className="w-4 h-4" />
+            </a>
+            <a href="#services" className="btn-secondary inline-flex items-center justify-center gap-2">
+              サービス内容を見る
+            </a>
+          </div>
+          <p className="text-sm text-slate-500 mt-4">
+            「気づいていなかった危険」を可視化し、事業が落ちる穴を事前に潰すパートナーです。
+          </p>
+        </div>
+
         {/* スクロールインジケーター */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
+        <div className="flex justify-center mt-8">
           <ChevronDownIcon className="w-5 h-5 text-slate-500 animate-bounce" />
         </div>
       </div>
