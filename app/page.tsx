@@ -588,7 +588,7 @@ function HeroSection() {
 
       <div className="container-custom relative z-10">
         {/* テキストセクション */}
-        <div className="max-w-3xl mx-auto text-center mb-8">
+        <div className="max-w-4xl mb-8">
           <div className={`space-y-6 ${mounted ? "animate-fade-in-up" : "opacity-0"}`}>
             {/* バッジ */}
             <div className="inline-flex items-center gap-2 badge badge-primary">
@@ -599,22 +599,19 @@ function HeroSection() {
             {/* メインコピー */}
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight text-glow">
               あなたのプロダクト、
-              <br />
+              <br className="hidden sm:block" />
               まだ<span className="gradient-text">「善意」と「偶然の無事故」</span>に
-              <br />
+              <br className="hidden sm:block" />
               依存していませんか？
             </h1>
 
             {/* サブコピー */}
-            <div className="space-y-4 text-slate-300 leading-relaxed max-w-2xl mx-auto text-sm md:text-base">
+            <div className="space-y-4 text-slate-200 leading-relaxed max-w-2xl text-base md:text-lg">
               <p>
-                <span className="text-white font-medium">元警視庁警察官 × Web3セキュリティ専門家</span>が、
-                攻撃者の視点・現場のリスク感覚・設計の盲点を総合的に監査。
+                <span className="text-white font-semibold">元警視庁警察官 × Web3セキュリティ専門家</span>が、攻撃者の視点・現場のリスク感覚・設計の盲点を総合的に監査。
               </p>
               <p>
-                技術の脆弱性だけでなく、
-                <span className="text-blue-200">運用ミス・権限管理・人間依存・仕様の歪み</span>まで、
-                攻撃者に"突かれる場所"を洗い出し、安全性を底面から引き上げます。
+                技術の脆弱性だけでなく、<span className="text-cyan-300 font-medium">運用ミス・権限管理・人間依存・仕様の歪み</span>まで、攻撃者に"突かれる場所"を洗い出し、安全性を底面から引き上げます。
               </p>
             </div>
           </div>
@@ -626,8 +623,8 @@ function HeroSection() {
         </div>
 
         {/* CTA */}
-        <div className={`max-w-3xl mx-auto text-center mt-6 ${mounted ? "animate-fade-in-up" : "opacity-0"}`} style={{ animationDelay: "0.5s" }}>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className={`max-w-4xl mt-6 ${mounted ? "animate-fade-in-up" : "opacity-0"}`} style={{ animationDelay: "0.5s" }}>
+          <div className="flex flex-col sm:flex-row gap-4">
             <a href="#contact" className="btn-primary inline-flex items-center justify-center gap-2">
               <ChatIcon className="w-5 h-5" />
               無料でお問合せ
@@ -637,8 +634,8 @@ function HeroSection() {
               サービス内容を見る
             </a>
           </div>
-          <p className="text-sm text-blue-200/80 mt-4 bg-blue-900/40 px-4 py-2 rounded-lg inline-block">
-            「気づいていなかった危険」を可視化し、事業が落ちる穴を事前に潰すパートナーです。
+          <p className="text-base text-slate-200 mt-5 bg-blue-900/50 border border-blue-700/40 px-5 py-3 rounded-xl inline-block">
+            💡 「気づいていなかった危険」を可視化し、事業が落ちる穴を事前に潰すパートナーです。
           </p>
         </div>
 
