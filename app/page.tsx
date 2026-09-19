@@ -570,12 +570,6 @@ function Header() {
 // ============================================
 
 function HeroSection() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   return (
     <section className="relative pt-28 pb-8 overflow-hidden">
       {/* 背景エフェクト */}
@@ -589,7 +583,7 @@ function HeroSection() {
       <div className="container-custom relative z-10">
         {/* テキストセクション */}
         <div className="max-w-4xl mb-8">
-          <div className={`space-y-6 ${mounted ? "animate-fade-in-up" : "opacity-0"}`}>
+          <div className="space-y-6 animate-fade-in-up">
             {/* バッジ */}
             <div className="inline-flex items-center gap-2 badge badge-primary">
               <ShieldCheckIcon className="w-4 h-4" />
@@ -611,19 +605,19 @@ function HeroSection() {
                 <span className="text-white font-semibold">元警視庁警察官 × Web3セキュリティ専門家</span>が、攻撃者の視点・現場のリスク感覚・設計の盲点を総合的に監査。
               </p>
               <p>
-                技術の脆弱性だけでなく、<span className="text-cyan-300 font-medium">運用ミス・権限管理・人間依存・仕様の歪み</span>まで、攻撃者に"突かれる場所"を洗い出し、安全性を底面から引き上げます。
+                技術の脆弱性だけでなく、<span className="text-cyan-300 font-medium">運用ミス・権限管理・人間依存・仕様の歪み</span>まで、攻撃者に「突かれる場所」を洗い出し、安全性を底面から引き上げます。
               </p>
             </div>
           </div>
         </div>
 
         {/* アニメーションセクション */}
-        <div className={`${mounted ? "animate-fade-in" : "opacity-0"}`} style={{ animationDelay: "0.3s" }}>
+        <div className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
           <CyberBattleAnimation />
         </div>
 
         {/* CTA */}
-        <div className={`max-w-4xl mt-6 ${mounted ? "animate-fade-in-up" : "opacity-0"}`} style={{ animationDelay: "0.5s" }}>
+        <div className="max-w-4xl mt-6 animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
           <div className="flex flex-col sm:flex-row gap-4">
             <a href="#contact" className="btn-primary inline-flex items-center justify-center gap-2">
               <ChatIcon className="w-5 h-5" />
@@ -892,7 +886,7 @@ function TrustSection() {
               ホワイトハッカーやセキュリティ責任者には、
               <span className="text-white font-bold">通常よりも高い倫理観と責任感</span>が求められます。
               <br />
-              お客様のシステムの"穴"を知る立場だからこそ、
+              お客様のシステムの「穴」を知る立場だからこそ、
               <span className="text-cyan-300 font-semibold">絶対的な信頼</span>が必要です。
             </p>
           </div>
