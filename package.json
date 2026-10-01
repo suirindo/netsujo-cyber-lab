@@ -17,21 +17,21 @@
   "author": "Netsujo",
   "license": "ISC",
   "dependencies": {
-    "@tailwindcss/postcss": "^4.1.17",
-    "next": "^16.0.8",
-    "react": "^19.2.1",
-    "react-dom": "^19.2.1"
+    "@tailwindcss/postcss": "^4.3.3",
+    "next": "16.3.8",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.3",
-    "@types/node": "^24.10.2",
-    "@types/react": "^19.2.7",
-    "@types/react-dom": "^19.2.3",
-    "autoprefixer": "^10.4.22",
-    "eslint": "^9.39.1",
-    "eslint-config-next": "^16.0.8",
-    "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.17",
+    "@eslint/eslintrc": "^3.3.7",
+    "@types/node": "^24.19.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "autoprefixer": "^10.6.1",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "16.3.8",
+    "postcss": "^8.5.28",
+    "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3"
   }
 }
