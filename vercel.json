@@ -9,6 +9,11 @@
   },
   "redirects": [
     {
+      "source": "/",
+      "destination": "https://netsujo.jp/projects/agent-os",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "destination": "https://netsujo.jp/projects/agent-os",
       "permanent": true
