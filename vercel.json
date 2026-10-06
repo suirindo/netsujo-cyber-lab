@@ -6,5 +6,12 @@
       "*": false,
       "main": true
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/:path*",
+      "destination": "https://netsujo.jp/projects/agent-os",
+      "permanent": true
+    }
+  ]
 }
