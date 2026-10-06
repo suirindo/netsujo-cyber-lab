@@ -1,57 +1,53 @@
 # Netsujo Cyber Lab
 
-Web3・業務システムのセキュリティ研究開発部門のランディングページです。
+> **Status: legacy / migration in progress**
 
-## 概要
+This repository contains the former standalone **Netsujo Cyber Lab** security-service landing page.
 
-元警視庁警察官 × Web3専門家による「攻撃者の目線」で守るセキュリティ設計サービスを提供するLPサイトです。
+Netsujo is no longer treating this repository as the canonical public surface for Cyber / Trust R&D. Durable trust-infrastructure work is being consolidated into the existing Netsujo R&D surfaces and the repositories that actually produce the implementation and evidence.
 
-## 技術スタック
+## Current ownership
 
-- **フレームワーク**: Next.js 16 (App Router)
-- **言語**: TypeScript
-- **スタイリング**: Tailwind CSS v4
-- **デプロイ**: Vercel
+- Public R&D explanation and public-safe proof summaries: `suirindo/netsujo-site`
+- Agent Role Contracts and declaration-consistency evaluations: `suirindo/agent-role-contracts`
+- Agent OS / Controller / recovery implementation and evidence: their existing repositories
+- SIGNAL-specific application evidence: `suirindo/netsujo-signal`
+- This repository: legacy source, migration history, and eventual archive
 
-## セットアップ
+Canonical migration tracker:
 
-```bash
-# 依存関係のインストール
-pnpm install
+- `suirindo/netsujo-site#555`
 
-# 開発サーバーの起動
-pnpm dev
+Repository-local transition tracker:
 
-# ビルド
-pnpm build
+- `suirindo/netsujo-cyber-lab#5`
 
-# 本番サーバーの起動
-pnpm start
-```
+## Important boundary
 
-## Vercelへのデプロイ
+The historical site contains security-service positioning, including vulnerability assessment / consulting / pricing / inquiry copy and synthetic SOC-style visuals.
 
-1. [Vercel](https://vercel.com) にログイン
-2. 「New Project」をクリック
-3. このリポジトリをインポート
-4. デプロイ設定はデフォルトでOK
-5. 「Deploy」をクリック
+Those historical materials must not be treated as proof that Netsujo currently provides or has independently demonstrated every capability described by the old landing page.
 
-## ページ構成
+For current Trust / AI-agent R&D, claims should be tied to reproducible evidence for the specific workflow, version, environment, and boundary being discussed.
 
-- **ヒーローセクション**: キャッチコピーとCTA
-- **共感セクション**: 対象顧客の課題・不安
-- **サービス概要**: 3レイヤーのサービス紹介
-- **ストーリー**: なぜNetsujoがやるのか
-- **料金プラン**: 提供メニューと料金イメージ
-- **対応領域**: 対応できるシステム・業務領域
-- **利用の流れ**: ご相談からレポート提出までのフロー
-- **FAQ**: よくあるご質問
-- **問い合わせフォーム**: 無料相談申し込み
+A declaration-layer PASS does not by itself prove runtime authorization, authenticated identity, reviewer independence, artifact authenticity, prevention of a real-world side effect, or business acceptance.
 
-## ライセンス
+## Migration policy
 
-© Netsujo Cyber Lab. All rights reserved.
+Until the migration tracker is closed:
 
+1. Do not turn this repository into a replacement `Trust Lab` or another product surface.
+2. Do not add a second evidence store, controller, task database, or agent runtime here.
+3. Do not merge legacy maintenance PRs solely because they are technically valid in isolation; first determine whether the legacy app still needs to be served during cutover.
+4. Do not change domain, DNS, production deployment, or delete historical source based only on this README.
+5. Archive the repository only after public migration dependencies and any required preservation work are complete.
 
+## Historical implementation
 
+The legacy landing page is a Next.js / TypeScript application using Tailwind CSS and was designed for Vercel deployment.
+
+The source is retained during migration for provenance and controlled cutover work. It is not the target location for new Netsujo trust-infrastructure product development.
+
+## License
+
+© Netsujo. All rights reserved.
